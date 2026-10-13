@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Residencias Profesionales · Ingeniería Industrial</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#15274e',
+            paper: '#f4f7fb',
+            line: '#dbe3ef',
+            steel: '#64748b',
+            accent: '#1b396a',
+            signal: '#15803d'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link href="../assets/css/app.css" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; }
+    body {
+      background-color: #f4f7fb;
+    }
+    :focus-visible {
+      outline: 2px solid #b48833;
+      outline-offset: 2px;
+    }
+    .tab-bar {
+      display: flex;
+      gap: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 1px solid #dbe3ef;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      padding: 0.85rem 0.15rem;
+      margin-right: 1.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #5c6b72;
+      border-bottom: 2px solid transparent;
+      transition: color .15s ease, border-color .15s ease;
+    }
+    .tab-btn:hover { color: #16233a; }
+    .tab-btn.is-active {
+      color: #16233a;
+      border-bottom-color: #b48833;
+    }
+    .tab-btn .material-symbols-outlined { font-size: 18px; }
+    .stage-node { position: relative; }
+    .stage-node:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 1.1rem;
+      left: 100%;
+      width: 1.5rem;
+      height: 1px;
+      background: #dde2df;
+    }
+    @media (max-width: 900px) {
+      .stage-node:not(:last-child)::after { display: none; }
+    }
+    .case-chip[aria-pressed="true"] {
+      background: #16233a;
+      color: #fff;
+      border-color: #16233a;
+    }
+    .row-hover:hover { background: #fbfcfb; }
+  </style>
+</head>
+<body class="min-h-screen font-sans text-slate-800 antialiased flex flex-col justify-between selection:bg-ink/10">
+
+  <!-- Botón de Menú Hamburguesa en la mera esquina superior izquierda -->
+  <button
+    id="hamburger-btn"
+    onclick="toggleMenu()"
+    aria-label="Abrir menú">
+    <span class="material-symbols-outlined text-2xl">menu</span>
+  </button>
+
+  <!-- Backdrop para móviles / interacción táctil -->
+  <div id="nav-backdrop"></div>
+
+  <!-- Menú Hamburguesa Desplegable (Lado Izquierdo - Azul Marino Minimalista) -->
+  <aside id="nav-drawer" class="bg-[#15274e] text-white shadow-2xl flex flex-col justify-between p-5 sm:p-6 overflow-y-auto" aria-label="Menú de Navegación">
+    <div>
+      <!-- Encabezado del Menú -->
+      <div class="flex items-center gap-3 pb-4 border-b border-white/10 mb-5">
+        <button class="w-8 h-8 rounded-lg text-white hover:bg-white/15 flex items-center justify-center transition cursor-pointer sidebar-toggle-btn" aria-label="Cerrar o alternar menú" title="Alternar menú">
+          <span class="material-symbols-outlined text-xl">menu</span>
+        </button>
+        <div>
+          <h2 class="text-xs font-bold text-white uppercase tracking-wider font-mono">TecNM Industrial</h2>
+          <p class="text-[11px] text-blue-200" data-user-name>Daniel Bautista</p>
+        </div>
+      </div>
+
+      <!-- Opciones de Navegación del Proyecto -->
+      <nav class="space-y-1 mb-4">
+        <a href="reticula.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-lg">grid_view</span>
+            <span>Retícula Curricular</span>
+          </div>
+          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
+        </a>
+
+        <a href="residencias.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-white/15 text-white font-semibold text-xs border border-white/10">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-lg text-amber-400">business_center</span>
+            <span>Residencias Profesionales</span>
+          </div>
+        </a>
+
+        <a href="temario.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-lg">menu_book</span>
+            <span>Temario</span>
+          </div>
+          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
+        </a>
+
+        <a href="gestion-vinculacion.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-lg">admin_panel_settings</span>
+            <span>Gestión y Vinculación</span>
+          </div>
+          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
+        </a>
+      </nav>
+
+      <!-- Notificaciones -->
+      <div class="border-t border-white/10 pt-4">
+        <div class="flex items-center gap-2 mb-2.5 px-1">
+          <div class="relative inline-flex items-center">
+            <span class="material-symbols-outlined text-amber-400 text-lg">notifications</span>
+            <span class="absolute -top-1 -right-1 text-[10px] font-bold text-amber-400 leading-none">2</span>
+          </div>
+          <span class="text-xs font-bold text-white">Notificaciones</span>
+        </div>
+      </div>
+        
+        <div class="space-y-1.5 text-xs">
+          <div class="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition cursor-pointer" onclick="activateTab('casos'); closeNavDrawer();">
+            <div class="flex items-center justify-between text-white font-medium text-[11px]">
+              <span>Caso #0241 en revisión</span>
+              <span class="text-[10px] text-amber-300 font-mono">Trámite</span>
+            </div>
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition cursor-pointer" onclick="activateTab('banco'); closeNavDrawer();">
+            <div class="flex items-center justify-between text-blue-200 font-medium text-[11px]">
+              <span>Nueva vacante PR-018</span>
+              <span class="text-[10px] text-blue-300 font-mono">Nemak</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pie del Menú con Cerrar Sesión -->
+    <div class="border-t border-white/10 pt-4 mt-6">
+      <a href="login.html" data-action="logout" class="w-full py-2 px-3 rounded-lg bg-white/10 hover:bg-rose-500/20 text-blue-100 hover:text-rose-200 text-xs font-bold transition flex items-center justify-center gap-2 border border-white/10 hover:border-rose-400/30">
+        <span class="material-symbols-outlined text-base">logout</span>
+        <span>Cerrar Sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8 flex-grow w-full">
+
+    <!-- Navegación por pestañas -->
+    <div class="tab-bar mb-6" role="tablist" aria-label="Secciones de residencias">
+      <button class="tab-btn is-active" role="tab" id="tab-proceso" aria-selected="true" aria-controls="panel-proceso" data-tab="proceso" onclick="activateTab('proceso')">
+        <span class="material-symbols-outlined">route</span> Mi proceso
+      </button>
+      <button class="tab-btn" role="tab" id="tab-banco" aria-selected="false" aria-controls="panel-banco" data-tab="banco" onclick="activateTab('banco')">
+        <span class="material-symbols-outlined">assignment</span> Banco de proyectos
+      </button>
+      <button class="tab-btn" role="tab" id="tab-empresas" aria-selected="false" aria-controls="panel-empresas" data-tab="empresas" onclick="activateTab('empresas')">
+        <span class="material-symbols-outlined">domain</span> Empresas
+      </button>
+      <button class="tab-btn" role="tab" id="tab-casos" aria-selected="false" aria-controls="panel-casos" data-tab="casos" onclick="activateTab('casos')">
+        <span class="material-symbols-outlined">support_agent</span> Casos especiales
+      </button>
+    </div>
+
+    <!-- PANEL: BANCO DE PROYECTOS -->
+    <section id="panel-banco" role="tabpanel" aria-labelledby="tab-banco" data-panel hidden>
+      <div class="bg-white border border-line rounded-xl overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-line flex items-center justify-between gap-3">
+          <div>
+            <h3 class="text-sm font-bold text-ink">Banco de proyectos disponibles</h3>
+            <p class="text-[11px] text-steel mt-0.5">Consulta la ficha técnica de las vacantes y postúlate a una vacante</p>
+          </div>
+          <span class="text-xs font-mono font-semibold text-steel bg-paper border border-line px-3 py-1.5 rounded-lg">
+            3 ofertas activas
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 p-5 sm:p-6">
+          
+          <article class="border border-line rounded-lg p-4 hover:border-accent/40 transition">
+            <div class="flex items-start justify-between gap-3">
+              <span class="text-[10px] font-mono font-semibold text-steel">PR-018</span>
+              <span class="text-[10px] font-semibold text-signal bg-signal/10 rounded px-2 py-0.5 font-mono">Publicación</span>
+            </div>
+            <h4 class="text-sm font-bold text-ink mt-3">Reducción de tiempos de cambio</h4>
+            <p class="text-[11px] text-steel mt-1">Nemak México · Producción</p>
+            <div class="flex items-center justify-between mt-4 pt-3 border-t border-line">
+              <span class="text-[10px] text-steel">4 meses · 1 vacante</span>
+              <button class="text-[11px] font-bold text-ink hover:text-accent" type="button" onclick="openProjectModal('PR-018', 'Reducción de tiempos de cambio', 'Nemak México · Planta García', '4 meses', 'Presencial', ['Manejo de herramientas SMED y 5S', 'Disponibilidad de turno matutino', '80% créditos aprobados'], 'Ing. Roberto Garza')">Ver ficha</button>
+            </div>
+          </article>
+
+          <article class="border border-line rounded-lg p-4 hover:border-accent/40 transition">
+            <div class="flex items-start justify-between gap-3">
+              <span class="text-[10px] font-mono font-semibold text-steel">PR-021</span>
+              <span class="text-[10px] font-semibold text-signal bg-signal/10 rounded px-2 py-0.5 font-mono">Publicación</span>
+            </div>
+            <h4 class="text-sm font-bold text-ink mt-3">Sistema de indicadores de calidad</h4>
+            <p class="text-[11px] text-steel mt-1">Bosch México · Calidad</p>
+            <div class="flex items-center justify-between mt-4 pt-3 border-t border-line">
+              <span class="text-[10px] text-steel">6 meses · 2 vacantes</span>
+              <button class="text-[11px] font-bold text-ink hover:text-accent" type="button" onclick="openProjectModal('PR-021', 'Sistema de indicadores de calidad', 'Bosch México · Juárez', '6 meses', 'Híbrido', ['Control Estadístico de Calidad', 'Inglés intermedio', '80% créditos aprobados'], 'Mtra. Diana Morales')">Ver ficha</button>
+            </div>
+          </article>
+
+          <article class="border border-line rounded-lg p-4 hover:border-accent/40 transition">
+            <div class="flex items-start justify-between gap-3">
+              <span class="text-[10px] font-mono font-semibold text-steel">PR-024</span>
+              <span class="text-[10px] font-semibold text-amber-700 bg-amber-50 rounded px-2 py-0.5 font-mono">Revisión</span>
+            </div>
+            <h4 class="text-sm font-bold text-ink mt-3">Optimización de rutas internas</h4>
+            <p class="text-[11px] text-steel mt-1">CEMEX Operaciones · Logística</p>
+            <div class="flex items-center justify-between mt-4 pt-3 border-t border-line">
+              <span class="text-[10px] text-steel">5 meses · 1 vacante</span>
+              <button class="text-[11px] font-bold text-ink hover:text-accent" type="button" onclick="showToast('Proyecto en revisión académica por coordinación')">Ver estado</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL: EMPRESAS -->
+    <section id="panel-empresas" role="tabpanel" aria-labelledby="tab-empresas" data-panel hidden>
+      <div class="bg-white border border-line rounded-xl overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-line">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div><h3 class="text-sm font-bold text-ink">Directorio de empresas con convenio</h3><p class="text-[11px] text-steel mt-0.5">Instituciones receptoras autorizadas por el TecNM</p></div>
+            <span class="text-[11px] font-mono font-semibold text-steel" id="company-count">3 resultados</span>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2 mt-4">
+            <label class="relative flex-1"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-steel text-lg">search</span><input id="company-search" class="w-full rounded-lg border-line bg-paper pl-10 pr-3 py-2 text-xs focus:border-accent focus:ring-accent" placeholder="Buscar por empresa, área o ciudad" type="search" oninput="filterCompanies()"></label>
+            <select id="area-filter" class="rounded-lg border-line bg-paper px-3 py-2 text-xs text-slate-600 focus:border-accent focus:ring-accent" onchange="filterCompanies()">
+              <option value="all">Todas las áreas</option>
+              <option value="produccion">Producción</option>
+              <option value="calidad">Calidad</option>
+              <option value="logistica">Logística</option>
+            </select>
+          </div>
+        </div>
+        <div class="divide-y divide-line" id="company-list">
+          <article class="p-5 sm:p-6 row-hover transition" data-search="nemak produccion monterrey manufactura">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div class="flex gap-3"><div class="w-9 h-9 shrink-0 rounded-lg bg-slate-100 text-ink flex items-center justify-center"><span class="material-symbols-outlined text-lg">factory</span></div><div><h4 class="text-sm font-bold text-ink">Nemak México</h4><p class="text-xs text-steel mt-0.5">Monterrey, Nuevo León · Producción</p></div></div>
+              <span class="w-fit text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded px-2 py-0.5">Convenio activo</span>
+            </div>
+            <div class="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><p class="text-xs text-slate-600">Mejora continua, procesos y manufactura esbelta</p><button class="text-xs font-semibold text-ink hover:text-accent shrink-0" type="button" onclick="showToast('Convenio vigente hasta 2027 · Vacantes disponibles')">Ver convenio</button></div>
+          </article>
+          <article class="p-5 sm:p-6 row-hover transition" data-search="bosch calidad ciudad juarez calidad">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div class="flex gap-3"><div class="w-9 h-9 shrink-0 rounded-lg bg-slate-100 text-ink flex items-center justify-center"><span class="material-symbols-outlined text-lg">precision_manufacturing</span></div><div><h4 class="text-sm font-bold text-ink">Bosch México</h4><p class="text-xs text-steel mt-0.5">Ciudad Juárez, Chihuahua · Calidad</p></div></div>
+              <span class="w-fit text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded px-2 py-0.5">Convenio activo</span>
+            </div>
+            <div class="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><p class="text-xs text-slate-600">Control estadístico y aseguramiento de calidad</p><button class="text-xs font-semibold text-ink hover:text-accent shrink-0" type="button" onclick="showToast('Convenio vigente hasta 2027 · Vacantes disponibles')">Ver convenio</button></div>
+          </article>
+          <article class="p-5 sm:p-6 row-hover transition" data-search="cemex logistica monterrey cadena suministro">
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div class="flex gap-3"><div class="w-9 h-9 shrink-0 rounded-lg bg-slate-100 text-ink flex items-center justify-center"><span class="material-symbols-outlined text-lg">local_shipping</span></div><div><h4 class="text-sm font-bold text-ink">CEMEX Operaciones</h4><p class="text-xs text-steel mt-0.5">Monterrey, Nuevo León · Logística</p></div></div>
+              <span class="w-fit text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded px-2 py-0.5">Convenio activo</span>
+            </div>
+            <div class="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><p class="text-xs text-slate-600">Planeación logística y cadena de suministro</p><button class="text-xs font-semibold text-ink hover:text-accent shrink-0" type="button" onclick="showToast('Convenio en proceso de renovación anual')">Ver convenio</button></div>
+          </article>
+        </div>
+        <div class="hidden p-8 text-center text-xs text-steel" id="empty-companies">No encontramos empresas con esos criterios.</div>
+      </div>
+    </section>
+
+    <!-- PANEL: MI PROCESO (Con Gestor de Documentos) -->
+    <section id="panel-proceso" role="tabpanel" aria-labelledby="tab-proceso" data-panel>
+      <div class="bg-white border border-line rounded-xl p-5 sm:p-6">
+        <div class="flex items-center justify-between gap-3 mb-1">
+          <div>
+            <h3 class="text-sm font-bold text-ink">Tu ruta de residencia</h3>
+            <p class="text-xs text-steel mt-0.5">Etapa actual: Revisión documental</p>
+          </div>
+          <span class="text-xs font-mono font-bold text-accent bg-blue-50 px-2.5 py-1 rounded" id="process-percentage">20%</span>
+        </div>
+        <div class="h-1.5 bg-slate-100 rounded-full mt-3 mb-8 overflow-hidden"><div class="h-full bg-accent rounded-full transition-all duration-300" id="process-bar" style="width:20%"></div></div>
+
+        <div class="space-y-8">
+          <div>
+            <p class="text-[11px] font-semibold text-steel mb-3 font-mono">Fase 1 · Trámite inicial</p>
+            <ol class="space-y-4 border-l border-line pl-5">
+              <li class="relative">
+                <span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-white" style="font-size:11px">check</span>
+                </span>
+                <p class="text-xs font-bold text-ink">Solicitud registrada</p>
+                <p class="text-[11px] text-steel mt-0.5">12 septiembre 2026 · Validada</p>
+              </li>
+              
+              <!-- Paso 2 con Carga de Documentos -->
+              <li class="relative">
+                <span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-accent" id="step-2-indicator"></span>
+                <p class="text-xs font-bold text-ink">Revisión de requisitos</p>
+                <p class="text-[11px] text-accent font-semibold mt-0.5 mb-3" id="step-2-label">Carga tus 2 documentos en PDF</p>
+
+                <!-- Gestor de Archivos Minimalista -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2 max-w-2xl">
+                  
+                  <!-- Documento 1 -->
+                  <div class="bg-paper border border-line rounded-lg p-3.5 flex flex-col justify-between" id="doc-card-1">
+                    <div class="flex items-start justify-between gap-2 mb-2.5">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-steel text-base">description</span>
+                        <span class="text-xs font-semibold text-ink">Liberación de retícula</span>
+                      </div>
+                      <span class="text-[10px] font-mono font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded" id="doc-status-1">Pendiente</span>
+                    </div>
+                    <label class="cursor-pointer inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-md bg-white border border-line hover:bg-slate-50 text-xs font-semibold text-ink transition">
+                      <span class="material-symbols-outlined text-sm text-accent">upload_file</span>
+                      <span id="doc-btn-text-1">Subir PDF</span>
+                      <input type="file" accept=".pdf" class="hidden" onchange="handleDocUpload(1, this)">
+                    </label>
+                  </div>
+
+                  <!-- Documento 2 -->
+                  <div class="bg-paper border border-line rounded-lg p-3.5 flex flex-col justify-between" id="doc-card-2">
+                    <div class="flex items-start justify-between gap-2 mb-2.5">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-steel text-base">verified</span>
+                        <span class="text-xs font-semibold text-ink">Constancia de 80% créditos</span>
+                      </div>
+                      <span class="text-[10px] font-mono font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded" id="doc-status-2">Pendiente</span>
+                    </div>
+                    <label class="cursor-pointer inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-md bg-white border border-line hover:bg-slate-50 text-xs font-semibold text-ink transition">
+                      <span class="material-symbols-outlined text-sm text-accent">upload_file</span>
+                      <span id="doc-btn-text-2">Subir PDF</span>
+                      <input type="file" accept=".pdf" class="hidden" onchange="handleDocUpload(2, this)">
+                    </label>
+                  </div>
+
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div>
+            <p class="text-[11px] font-semibold text-steel mb-3 font-mono">Fase 2 · Vinculación</p>
+            <ol class="space-y-4 border-l border-line pl-5 opacity-60">
+              <li class="relative"><span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-slate-200"></span><p class="text-xs font-bold text-ink">Elegir empresa y proyecto</p><p class="text-[11px] text-steel mt-0.5">Pendiente de validación documental</p></li>
+              <li class="relative"><span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-slate-200"></span><p class="text-xs font-bold text-ink">Entrevista con la empresa</p><p class="text-[11px] text-steel mt-0.5">Pendiente</p></li>
+            </ol>
+          </div>
+
+          <div>
+            <p class="text-[11px] font-semibold text-steel mb-3 font-mono">Fase 3 · Formalización</p>
+            <ol class="space-y-4 border-l border-line pl-5 opacity-60">
+              <li class="relative"><span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-slate-200"></span><p class="text-xs font-bold text-ink">Registro de anteproyecto</p><p class="text-[11px] text-steel mt-0.5">Pendiente</p></li>
+              <li class="relative"><span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-slate-200"></span><p class="text-xs font-bold text-ink">Validación de comité</p><p class="text-[11px] text-steel mt-0.5">Pendiente</p></li>
+              <li class="relative"><span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-slate-200"></span><p class="text-xs font-bold text-ink">Carta de presentación y convenio</p><p class="text-[11px] text-steel mt-0.5">Pendiente de firma</p></li>
+            </ol>
+          </div>
+
+          <div>
+            <p class="text-[11px] font-semibold text-steel mb-3 font-mono">Fase 4 · Ejecución y cierre</p>
+            <ol class="space-y-4 border-l border-line pl-5 opacity-60">
+              <li class="relative"><span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-slate-200"></span><p class="text-xs font-bold text-ink">Reportes parciales y final</p><p class="text-[11px] text-steel mt-0.5">Durante la estancia</p></li>
+              <li class="relative"><span class="absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-slate-200"></span><p class="text-xs font-bold text-ink">Evaluación y acreditación</p><p class="text-[11px] text-steel mt-0.5">Pendiente</p></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL: CASOS ESPECIALES -->
+    <section id="panel-casos" role="tabpanel" aria-labelledby="tab-casos" data-panel hidden>
+      <div class="bg-white border border-line rounded-xl overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-line flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+          <div>
+            <h3 class="text-sm font-bold text-ink">Casos especiales</h3>
+            <p class="text-xs text-steel mt-0.5">Seguimiento a situaciones fuera de calendario o cambios de proyecto.</p>
+          </div>
+          <button class="rounded-lg bg-accent px-3.5 py-2 text-xs font-semibold text-white hover:bg-ink transition shrink-0" type="button" onclick="openCaseModal()">+ Reportar caso</button>
+        </div>
+        <div class="px-5 sm:px-6 py-3 border-b border-line bg-paper/50 flex gap-2 overflow-x-auto text-xs font-semibold">
+          <button class="case-chip rounded-lg border border-line px-3 py-1 bg-white text-ink transition" aria-pressed="true" type="button" onclick="filterCases('all', this)">Todos</button>
+          <button class="case-chip rounded-lg border border-line px-3 py-1 bg-white text-steel transition" aria-pressed="false" type="button" onclick="filterCases('open', this)">En revisión</button>
+          <button class="case-chip rounded-lg border border-line px-3 py-1 bg-white text-steel transition" aria-pressed="false" type="button" onclick="filterCases('closed', this)">Resueltos</button>
+        </div>
+        <div class="divide-y divide-line" id="case-list">
+          <article class="p-5 sm:p-6 row-hover transition" data-status="open">
+            <div class="flex items-center justify-between gap-3">
+              <span class="text-[10px] font-mono font-bold text-steel">CASO #0241</span>
+              <span class="text-[10px] font-semibold text-amber-700 bg-amber-50 rounded px-2 py-0.5 font-mono">En revisión</span>
+            </div>
+            <p class="text-xs font-bold text-ink mt-2">Cambio de fecha de inicio con empresa receptora</p>
+            <p class="text-[11px] text-steel mt-0.5">Tipo: Prórroga · Abierto hace 2 días</p>
+          </article>
+        </div>
+        <div class="hidden p-8 text-center text-xs text-steel" id="empty-cases">No hay casos en este estado.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal Ficha Técnica de Proyecto -->
+  <div class="hidden fixed inset-0 z-50 bg-ink/40 p-4 items-center justify-center backdrop-blur-xs" id="project-modal" role="dialog" aria-modal="true">
+    <div class="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-line overflow-hidden">
+      <div class="p-5 border-b border-line bg-paper flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="font-mono text-xs font-bold text-ink" id="p-modal-code">PR-018</span>
+          <span class="text-[10px] font-semibold text-signal bg-signal/10 rounded px-2 py-0.5 font-mono" id="p-modal-status">Publicado</span>
+        </div>
+        <button class="text-steel hover:text-ink w-7 h-7 flex items-center justify-center rounded-lg hover:bg-slate-200/60 transition" onclick="closeProjectModal()"><span class="material-symbols-outlined text-lg">close</span></button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div>
+          <h3 class="text-base font-bold text-ink" id="p-modal-title">Título del Proyecto</h3>
+          <p class="text-xs text-steel mt-0.5" id="p-modal-company">Nemak México · Producción</p>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-xs">
+          <div class="bg-paper p-3 rounded-lg border border-line"><span class="text-[10px] text-steel font-mono uppercase block font-bold">Duración</span><span class="font-semibold text-ink text-xs mt-0.5 block" id="p-modal-duration">4 meses</span></div>
+          <div class="bg-paper p-3 rounded-lg border border-line"><span class="text-[10px] text-steel font-mono uppercase block font-bold">Modalidad</span><span class="font-semibold text-ink text-xs mt-0.5 block" id="p-modal-mode">Presencial</span></div>
+        </div>
+        <div class="bg-paper p-3 rounded-lg border border-line">
+          <span class="text-[10px] font-mono font-bold text-steel uppercase block mb-1.5">Requisitos del Residente</span>
+          <ul class="text-xs text-steel space-y-1.5" id="p-modal-reqs">
+            <li class="flex items-center gap-1.5"><span class="material-symbols-outlined text-xs text-emerald-600">check</span> 80% de créditos aprobados</li>
+            <li class="flex items-center gap-1.5"><span class="material-symbols-outlined text-xs text-emerald-600">check</span> Manejo de herramientas SMED y 5S</li>
+          </ul>
+        </div>
+        <div class="text-xs text-steel flex items-center justify-between pt-1">
+          <span>Asesor asignado: <strong class="text-ink" id="p-modal-advisor">Ing. Roberto Garza</strong></span>
+        </div>
+      </div>
+      <div class="p-4 bg-paper border-t border-line flex items-center justify-end gap-2">
+        <button class="px-4 py-2 rounded-lg border border-line bg-white text-xs font-semibold text-ink hover:bg-slate-50 transition" onclick="closeProjectModal()">Cerrar</button>
+        <button class="px-4 py-2 rounded-lg bg-ink hover:bg-accent text-xs font-semibold text-white transition inline-flex items-center gap-1.5" id="p-modal-apply-btn" onclick="applyToCurrentProject()">
+          <span>Postularme</span>
+          <span class="material-symbols-outlined text-sm">send</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Reportar Caso -->
+  <div class="hidden fixed inset-0 z-50 bg-ink/40 p-4 items-center justify-center backdrop-blur-xs" id="case-modal" role="dialog" aria-modal="true" aria-labelledby="case-modal-title">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 border border-line">
+      <div class="flex items-start justify-between gap-3">
+        <div><p class="text-[11px] font-semibold text-accent font-mono">Mesa de ayuda</p><h2 id="case-modal-title" class="text-base font-bold text-ink mt-0.5">Reportar caso especial</h2></div>
+        <button class="text-steel hover:text-ink w-7 h-7 flex items-center justify-center rounded-lg hover:bg-slate-100" type="button" onclick="closeCaseModal()" aria-label="Cerrar"><span class="material-symbols-outlined text-lg">close</span></button>
+      </div>
+      <label class="block text-xs font-semibold text-ink mt-4">Tipo de caso
+        <select id="case-type" class="mt-1.5 w-full rounded-lg border-line bg-paper text-xs text-ink focus:border-accent focus:ring-accent">
+          <option>Cambio de fecha de inicio o cierre</option>
+          <option>Cambio de empresa receptora</option>
+          <option>Baja temporal / prórroga</option>
+          <option>Conflicto o ajuste de horario</option>
+        </select>
+      </label>
+      <label class="block text-xs font-semibold text-ink mt-3">Descripción breve
+        <textarea id="case-description" class="mt-1.5 w-full rounded-lg border-line bg-paper text-xs text-ink focus:border-accent focus:ring-accent" rows="3" placeholder="Describe brevemente la situación..."></textarea>
+      </label>
+      <label class="block text-xs font-semibold text-steel mt-3">
+        <span class="block mb-1 font-mono text-[10px] uppercase font-bold text-steel">Adjunto opcional (PDF / JPG)</span>
+        <input type="file" accept=".pdf,.jpg,.png" class="text-xs text-steel file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-paper file:text-ink hover:file:bg-slate-200">
+      </label>
+      <button class="w-full mt-5 rounded-lg bg-ink hover:bg-accent px-4 py-2.5 text-xs font-semibold text-white transition" type="button" onclick="submitCase()">Enviar solicitud</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div aria-live="polite" class="fixed bottom-5 right-5 hidden max-w-xs rounded-xl bg-ink px-4 py-3 text-xs font-semibold text-white shadow-xl z-50 border border-white/10" id="toast"></div>
+
+  <!-- Footer Institucional -->
+  <footer class="w-full border-t border-line bg-white py-6 px-4 sm:px-8 mt-12 text-xs text-steel">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-ink">TecNM</span>
+        <span>© 2026 Tecnológico Nacional de México · Ingeniería Industrial</span>
+      </div>
+      <div class="flex items-center gap-6 text-[11px] font-mono">
+        <span>Residencias Profesionales</span>
+        <span>v2.4</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js?v=3" defer></script>
+  <script>
+    function activateTab(name) {
+      document.querySelectorAll('.tab-btn').forEach((btn) => {
+        const active = btn.dataset.tab === name;
+        btn.setAttribute('aria-selected', active);
+        btn.classList.toggle('is-active', active);
+      });
+      document.querySelectorAll('[data-panel]').forEach((panel) => {
+        panel.hidden = panel.id !== `panel-${name}`;
+      });
+      document.getElementById('notif-dropdown')?.classList.add('hidden');
+    }
+
+    function toggleNotifications() {
+      const dd = document.getElementById('notif-dropdown');
+      if (dd) dd.classList.toggle('hidden');
+    }
+
+    let uploadedDocs = { 1: false, 2: false };
+    function handleDocUpload(num, input) {
+      if (input.files && input.files[0]) {
+        uploadedDocs[num] = true;
+        const fileName = input.files[0].name;
+        document.getElementById(`doc-status-${num}`).textContent = 'Cargado';
+        document.getElementById(`doc-status-${num}`).className = 'text-[10px] font-mono font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded';
+        document.getElementById(`doc-btn-text-${num}`).textContent = fileName.length > 18 ? fileName.substring(0, 15) + '...' : fileName;
+        
+        showToast(`Documento "${fileName}" subido exitosamente`);
+        
+        if (uploadedDocs[1] && uploadedDocs[2]) {
+          document.getElementById('process-percentage').textContent = '30%';
+          document.getElementById('process-bar').style.width = '30%';
+          document.getElementById('step-2-indicator').className = 'absolute -left-[27px] top-0.5 w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center';
+          document.getElementById('step-2-indicator').innerHTML = '<span class="material-symbols-outlined text-white" style="font-size:11px">check</span>';
+          document.getElementById('step-2-label').textContent = 'Documentos completos · En validación por coordinación';
+          document.getElementById('step-2-label').className = 'text-[11px] text-emerald-700 font-semibold mt-0.5 mb-3';
+        }
+      }
+    }
+
+    let currentProjectCode = '';
+    function openProjectModal(code, title, company, duration, mode, reqs, advisor) {
+      currentProjectCode = code;
+      document.getElementById('p-modal-code').textContent = code;
+      document.getElementById('p-modal-title').textContent = title;
+      document.getElementById('p-modal-company').textContent = company;
+      document.getElementById('p-modal-duration').textContent = duration;
+      document.getElementById('p-modal-mode').textContent = mode;
+      document.getElementById('p-modal-advisor').textContent = advisor;
+      
+      const reqList = document.getElementById('p-modal-reqs');
+      reqList.innerHTML = '';
+      reqs.forEach(r => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center gap-1.5';
+        li.innerHTML = `<span class="material-symbols-outlined text-xs text-emerald-600">check</span> ${r}`;
+        reqList.appendChild(li);
+      });
+
+      const applyBtn = document.getElementById('p-modal-apply-btn');
+      applyBtn.disabled = false;
+      applyBtn.innerHTML = '<span>Postularme</span><span class="material-symbols-outlined text-sm">send</span>';
+      
+      document.getElementById('project-modal').classList.replace('hidden', 'flex');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('project-modal').classList.replace('flex', 'hidden');
+    }
+
+    function applyToCurrentProject() {
+      const applyBtn = document.getElementById('p-modal-apply-btn');
+      applyBtn.disabled = true;
+      applyBtn.innerHTML = '<span>✓ Postulado</span>';
+      showToast(`Te has postulado con éxito a la vacante ${currentProjectCode}`);
+      window.setTimeout(() => closeProjectModal(), 900);
+    }
+
+    function filterCompanies() {
+      const query = document.getElementById('company-search').value.toLowerCase().trim();
+      const area = document.getElementById('area-filter').value;
+      const items = document.querySelectorAll('#company-list > article');
+      let visible = 0;
+      items.forEach((item) => {
+        const matchesQuery = !query || item.dataset.search.includes(query);
+        const matchesArea = area === 'all' || item.dataset.search.includes(area);
+        item.classList.toggle('hidden', !(matchesQuery && matchesArea));
+        if (matchesQuery && matchesArea) visible++;
+      });
+      document.getElementById('company-count').textContent = `${visible} resultado${visible === 1 ? '' : 's'}`;
+      document.getElementById('empty-companies').classList.toggle('hidden', visible !== 0);
+    }
+
+    function filterCases(status, btn) {
+      document.querySelectorAll('.case-chip').forEach((chip) => chip.setAttribute('aria-pressed', chip === btn));
+      const items = document.querySelectorAll('#case-list > article');
+      let visible = 0;
+      items.forEach((item) => {
+        const match = status === 'all' || item.dataset.status === status;
+        item.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+      document.getElementById('empty-cases').classList.toggle('hidden', visible !== 0);
+    }
+
+    let caseCounter = 242;
+    function submitCase() {
+      const type = document.getElementById('case-type').value;
+      const description = document.getElementById('case-description').value.trim();
+      if (!description) {
+        showToast('Escribe una breve descripción de tu situación');
+        return;
+      }
+      const list = document.getElementById('case-list');
+      const article = document.createElement('article');
+      article.className = 'p-5 sm:p-6 row-hover transition';
+      article.dataset.status = 'open';
+      article.innerHTML = `
+        <div class="flex items-center justify-between gap-3"><span class="text-[10px] font-mono font-bold text-steel">CASO #0${caseCounter}</span><span class="text-[10px] font-semibold text-amber-700 bg-amber-50 rounded px-2 py-0.5 font-mono">En revisión</span></div>
+        <p class="text-xs font-bold text-ink mt-2">${type}</p>
+        <p class="text-[11px] text-steel mt-0.5">Tipo: ${type} · Abierto hace instantes</p>
+      `;
+      list.prepend(article);
+      caseCounter += 1;
+      document.getElementById('case-description').value = '';
+      closeCaseModal();
+      showToast('Caso enviado. Coordinación dará respuesta en 24h.');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      window.setTimeout(() => toast.classList.add('hidden'), 2800);
+    }
+    function openCaseModal() { document.getElementById('case-modal').classList.replace('hidden', 'flex'); }
+    function closeCaseModal() { document.getElementById('case-modal').classList.replace('flex', 'hidden'); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión y Vinculación · Residencias Profesionales</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#15274e',
+            paper: '#f4f7fb',
+            line: '#dbe3ef',
+            steel: '#64748b',
+            accent: '#1b396a',
+            signal: '#15803d'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <link href="../assets/css/app.css" rel="stylesheet">
+  <style>
+    :root { color-scheme: light; }
+    body {
+      background-color: #f4f7fb;
+    }
+  </style>
+</head>
+<body class="min-h-screen font-sans text-slate-800 antialiased flex flex-col justify-between selection:bg-ink/10">
+
+  <!-- Botón de Menú Hamburguesa en la mera esquina superior izquierda -->
+  <button
+    id="hamburger-btn"
+    onclick="toggleMenu()"
+    aria-label="Abrir menú">
+    <span class="material-symbols-outlined text-2xl">menu</span>
+  </button>
+
+  <!-- Backdrop para móviles / interacción táctil -->
+  <div id="nav-backdrop"></div>
+
+  <!-- Menú Hamburguesa Desplegable (Lado Izquierdo - Azul Marino Minimalista) -->
+  <aside id="nav-drawer" class="bg-[#15274e] text-white shadow-2xl flex flex-col justify-between p-5 sm:p-6 overflow-y-auto" aria-label="Menú de Navegación">
+    <div>
+      <!-- Encabezado del Menú -->
+      <div class="flex items-center gap-3 pb-4 border-b border-white/10 mb-5">
+        <button class="w-8 h-8 rounded-lg text-white hover:bg-white/15 flex items-center justify-center transition cursor-pointer sidebar-toggle-btn" aria-label="Cerrar o alternar menú" title="Alternar menú">
+          <span class="material-symbols-outlined text-xl">menu</span>
+        </button>
+        <div>
+          <h2 class="text-xs font-bold text-white uppercase tracking-wider font-mono">Panel Administrativo</h2>
+          <p class="text-[11px] text-blue-200">Vinculación</p>
+        </div>
+      </div>
+
+      <!-- Opciones de Navegación del Proyecto -->
+      <nav class="space-y-1 mb-4">
+        <a href="gestion-vinculacion.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-white/15 text-white font-semibold text-xs border border-white/10">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-lg text-amber-400">admin_panel_settings</span>
+            <span>Gestión y Vinculación</span>
+          </div>
+        </a>
+
+        <a href="reticula.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-lg">grid_view</span>
+            <span>Retícula Curricular</span>
+          </div>
+          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
+        </a>
+
+        <a href="residencias.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-lg">business_center</span>
+            <span>Residencias</span>
+          </div>
+          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
+        </a>
+
+        <a href="temario.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
+          <div class="flex items-center gap-2.5">
+            <span class="material-symbols-outlined text-lg">menu_book</span>
+            <span>Temario</span>
+          </div>
+          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
+        </a>
+      </nav>
+
+      <!-- Notificaciones / Trámites -->
+      <div class="border-t border-white/10 pt-4">
+        <div class="flex items-center gap-2 mb-2.5 px-1">
+          <div class="relative inline-flex items-center">
+            <span class="material-symbols-outlined text-amber-400 text-lg">notifications</span>
+            <span class="absolute -top-1 -right-1 text-[10px] font-bold text-amber-400 leading-none">2</span>
+          </div>
+          <span class="text-xs font-bold text-white">Avisos y Trámites</span>
+        </div>
+      </div>
+        
+        <div class="space-y-1.5 text-xs">
+          <div class="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition cursor-pointer" onclick="activateAdminTab('solicitudes'); closeNavDrawer();">
+            <div class="flex items-center justify-between text-white font-medium text-[11px]">
+              <span>Solicitud de Alberto Díaz</span>
+              <span class="text-[10px] text-amber-300 font-mono">Pendiente</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Pie del Menú con Cerrar Sesión -->
+    <div class="border-t border-white/10 pt-4 mt-6">
+      <a href="login.html" data-action="logout" class="w-full py-2 px-3 rounded-lg bg-white/10 hover:bg-rose-500/20 text-blue-100 hover:text-rose-200 text-xs font-bold transition flex items-center justify-center gap-2 border border-white/10 hover:border-rose-400/30">
+        <span class="material-symbols-outlined text-base">logout</span>
+        <span>Cerrar Sesión</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8 flex-grow w-full">
+
+    <!-- Navegación por pestañas -->
+    <div class="tab-bar mb-6" role="tablist" aria-label="Secciones de administración">
+      <button class="tab-btn is-active" role="tab" id="tab-adm-solicitudes" aria-selected="true" aria-controls="panel-adm-solicitudes" data-admin-tab="solicitudes" onclick="activateAdminTab('solicitudes')">
+        <span class="material-symbols-outlined">assignment</span> Solicitudes de Alumnos
+      </button>
+      <button class="tab-btn" role="tab" id="tab-adm-empresas" aria-selected="false" aria-controls="panel-adm-empresas" data-admin-tab="empresas" onclick="activateAdminTab('empresas')">
+        <span class="material-symbols-outlined">domain</span> Empresas y Ofertas
+      </button>
+      <button class="tab-btn" role="tab" id="tab-adm-casos" aria-selected="false" aria-controls="panel-adm-casos" data-admin-tab="casos" onclick="activateAdminTab('casos')">
+        <span class="material-symbols-outlined">support_agent</span> Casos Especiales
+      </button>
+    </div>
+
+    <!-- PANEL 1: SOLICITUDES (Activo por defecto) -->
+    <section id="panel-adm-solicitudes" role="tabpanel" aria-labelledby="tab-adm-solicitudes" data-admin-panel="solicitudes">
+      <section class="bg-white border border-line rounded-xl overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-line flex items-center justify-between gap-3">
+          <div>
+            <h3 class="text-sm font-bold text-ink">Seguimiento de solicitudes de alumnos</h3>
+            <p class="text-[11px] text-steel mt-0.5">Revisa documentos cargados, valida prerequisitos y autoriza cartas de presentación.</p>
+          </div>
+          <span class="text-xs font-mono font-semibold text-steel bg-paper border border-line px-3 py-1.5 rounded-lg">
+            2 pendientes
+          </span>
+        </div>
+        <div class="divide-y divide-line">
+          <article class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 row-hover transition">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-ink">Daniel Bautista</span>
+                <span class="font-mono text-[10px] text-steel">· Matrícula: 20201542</span>
+              </div>
+              <p class="text-[11px] text-steel">Solicitud de inicio · Documentos en revisión · Etapa 2 (Requisitos)</p>
+            </div>
+            <button class="rounded-lg bg-ink px-3.5 py-2 text-xs font-semibold text-white hover:bg-accent transition shrink-0" onclick="showToast('Solicitud de Daniel Bautista abierta para revisión')">
+              Revisar solicitud
+            </button>
+          </article>
+          <article class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 row-hover transition">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-ink">Mariana López</span>
+                <span class="font-mono text-[10px] text-steel">· Matrícula: 20201876</span>
+              </div>
+              <p class="text-[11px] text-steel">Postulación PR-021 · Entrevista pendiente con Bosch · Etapa 4</p>
+            </div>
+            <button class="rounded-lg border border-line px-3.5 py-2 text-xs font-semibold text-ink hover:bg-slate-50 transition shrink-0" onclick="showToast('Entrevista de Mariana López marcada para seguimiento')">
+              Dar seguimiento
+            </button>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- PANEL 2: EMPRESAS Y OFERTAS -->
+    <section id="panel-adm-empresas" role="tabpanel" aria-labelledby="tab-adm-empresas" data-admin-panel="empresas" hidden>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+        
+        <!-- Empresas con Convenio -->
+        <section class="bg-white border border-line rounded-xl overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-line flex items-center justify-between gap-3">
+            <div>
+              <h3 class="text-sm font-bold text-ink">Empresas con convenio</h3>
+              <p class="text-[11px] text-steel mt-0.5">Alta, renovación y vigencia de instituciones receptoras</p>
+            </div>
+            <button class="inline-flex items-center gap-1 rounded-lg bg-accent px-3 py-2 text-xs font-semibold text-white hover:bg-ink transition" onclick="showToast('Formulario de nueva empresa disponible')">
+              <span class="material-symbols-outlined text-sm">add</span> Nueva empresa
+            </button>
+          </div>
+          <div class="divide-y divide-line">
+            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
+              <div>
+                <h4 class="text-xs font-bold text-ink">Nemak México</h4>
+                <p class="text-[11px] text-steel mt-0.5">Monterrey · Producción · Vence 30/06/2027</p>
+              </div>
+              <button class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1" onclick="showToast('Convenio de Nemak en orden')">
+                Activo
+              </button>
+            </article>
+            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
+              <div>
+                <h4 class="text-xs font-bold text-ink">Bosch México</h4>
+                <p class="text-[11px] text-steel mt-0.5">Ciudad Juárez · Calidad · Vence 18/02/2027</p>
+              </div>
+              <button class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1" onclick="showToast('Convenio de Bosch en orden')">
+                Activo
+              </button>
+            </article>
+            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
+              <div>
+                <h4 class="text-xs font-bold text-ink">CEMEX Operaciones</h4>
+                <p class="text-[11px] text-steel mt-0.5">Monterrey · Logística · Renovación pendiente</p>
+              </div>
+              <button class="text-[10px] font-semibold text-amber-700 bg-amber-50 rounded px-2.5 py-1" onclick="showToast('Renovación de CEMEX turnada a jurídico')">
+                Por renovar
+              </button>
+            </article>
+          </div>
+        </section>
+
+        <!-- Ofertas de Residencia -->
+        <section class="bg-white border border-line rounded-xl overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-line flex items-center justify-between gap-3">
+            <div>
+              <h3 class="text-sm font-bold text-ink">Ofertas de residencia</h3>
+              <p class="text-[11px] text-steel mt-0.5">Publica, pausa o retira proyectos del banco</p>
+            </div>
+            <button class="inline-flex items-center gap-1 rounded-lg border border-line px-3 py-2 text-xs font-semibold text-ink hover:bg-slate-50 transition" onclick="showToast('Formulario de nueva oferta disponible')">
+              <span class="material-symbols-outlined text-sm">post_add</span> Nueva oferta
+            </button>
+          </div>
+          <div class="divide-y divide-line">
+            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[10px] font-semibold text-steel">PR-018</span>
+                  <h4 class="text-xs font-bold text-ink">Reducción de tiempos de cambio</h4>
+                </div>
+                <p class="text-[11px] text-steel mt-0.5">Nemak México · 3 postulaciones de alumnos</p>
+              </div>
+              <button class="offer-status text-[10px] font-bold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1.5 transition" aria-pressed="true" onclick="toggleOffer(this)">
+                Publicada
+              </button>
+            </article>
+            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[10px] font-semibold text-steel">PR-021</span>
+                  <h4 class="text-xs font-bold text-ink">Indicadores de calidad</h4>
+                </div>
+                <p class="text-[11px] text-steel mt-0.5">Bosch México · 2 postulaciones de alumnos</p>
+              </div>
+              <button class="offer-status text-[10px] font-bold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1.5 transition" aria-pressed="true" onclick="toggleOffer(this)">
+                Publicada
+              </button>
+            </article>
+            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[10px] font-semibold text-steel">PR-024</span>
+                  <h4 class="text-xs font-bold text-ink">Optimización de rutas</h4>
+                </div>
+                <p class="text-[11px] text-steel mt-0.5">CEMEX Operaciones · Sin postulaciones</p>
+              </div>
+              <button class="offer-status text-[10px] font-bold text-steel bg-slate-100 rounded px-2.5 py-1.5 transition" aria-pressed="false" onclick="toggleOffer(this)">
+                Retirada
+              </button>
+            </article>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <!-- PANEL 3: SOLICITUDES -->
+    <section id="panel-adm-solicitudes" role="tabpanel" aria-labelledby="tab-adm-solicitudes" data-admin-panel="solicitudes" hidden>
+      <section class="bg-white border border-line rounded-xl overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-line">
+          <h3 class="text-sm font-bold text-ink">Seguimiento de solicitudes de alumnos</h3>
+          <p class="text-[11px] text-steel mt-0.5">Revisa documentos, asigna empresa y autoriza el avance del proceso.</p>
+        </div>
+        <div class="divide-y divide-line">
+          <article class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 row-hover transition">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-ink">Daniel Bautista</span>
+                <span class="font-mono text-[10px] text-steel">· Matrícula: 20201542</span>
+              </div>
+              <p class="text-[11px] text-steel">Solicitud de inicio · Documentos incompletos · Etapa 2 de 10</p>
+            </div>
+            <button class="rounded-lg bg-accent px-3.5 py-2 text-xs font-semibold text-white hover:bg-ink transition shrink-0" onclick="showToast('Solicitud de Daniel Bautista abierta para revisión')">
+              Revisar solicitud
+            </button>
+          </article>
+          <article class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 row-hover transition">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-ink">Mariana López</span>
+                <span class="font-mono text-[10px] text-steel">· Matrícula: 20201876</span>
+              </div>
+              <p class="text-[11px] text-steel">Postulación PR-021 · Entrevista pendiente con Bosch · Etapa 4 de 10</p>
+            </div>
+            <button class="rounded-lg border border-line px-3.5 py-2 text-xs font-semibold text-ink hover:bg-slate-50 transition shrink-0" onclick="showToast('Entrevista de Mariana López marcada para seguimiento')">
+              Dar seguimiento
+            </button>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- PANEL 4: CASOS ESPECIALES -->
+    <section id="panel-adm-casos" role="tabpanel" aria-labelledby="tab-adm-casos" data-admin-panel="casos" hidden>
+      <section class="bg-white border border-line rounded-xl overflow-hidden">
+        <div class="p-5 sm:p-6 border-b border-line">
+          <h3 class="text-sm font-bold text-ink">Atención de casos especiales</h3>
+          <p class="text-[11px] text-steel mt-0.5">Resuelve solicitudes fuera de calendario, cambios de proyecto o bajas temporales.</p>
+        </div>
+        <div class="p-5 sm:p-6">
+          <div class="rounded-xl border border-amber-200/80 bg-amber-50/40 p-5">
+            <div class="flex items-center justify-between gap-3">
+              <span class="text-xs font-mono font-bold text-steel">CASO #0241</span>
+              <span class="case-status text-xs font-bold text-amber-700 bg-amber-100/60 px-2.5 py-0.5 rounded">En revisión</span>
+            </div>
+            <h4 class="text-sm font-bold text-ink mt-3">Cambio de fecha de inicio con empresa receptora</h4>
+            <p class="text-xs text-steel mt-1">Alumno: Daniel Bautista (20201542) · Abierto hace 2 días</p>
+            <div class="flex flex-wrap gap-2.5 mt-5">
+              <button class="rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white hover:bg-ink transition" onclick="resolveCase(this)">
+                Atender caso
+              </button>
+              <button class="rounded-lg border border-line bg-white px-4 py-2 text-xs font-semibold text-ink hover:bg-slate-50 transition" onclick="showToast('Caso turnado al comité académico')">
+                Asignar al comité
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div aria-live="polite" class="fixed bottom-5 right-5 hidden max-w-xs rounded-xl bg-ink px-4 py-3 text-xs font-semibold text-white shadow-xl z-50 border border-white/10" id="toast"></div>
+
+  <!-- Footer Institucional -->
+  <footer class="w-full border-t border-line bg-white py-6 px-4 sm:px-8 mt-12 text-xs text-steel">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-ink">TecNM</span>
+        <span>© 2026 Tecnológico Nacional de México · Ingeniería Industrial</span>
+      </div>
+      <div class="flex items-center gap-6 text-[11px] font-mono">
+        <span>Módulo de Vinculación</span>
+        <span>v2.4</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js?v=3" defer></script>
+  <script>
+    function activateAdminTab(name) {
+      document.querySelectorAll('[data-admin-tab]').forEach((tab) => {
+        const active = tab.dataset.adminTab === name;
+        tab.classList.toggle('is-active', active);
+        tab.setAttribute('aria-selected', active);
+      });
+      document.querySelectorAll('[data-admin-panel]').forEach((panel) => {
+        panel.hidden = panel.dataset.adminPanel !== name;
+      });
+    }
+
+    function toggleOffer(button) {
+      const published = button.getAttribute('aria-pressed') === 'true';
+      button.setAttribute('aria-pressed', String(!published));
+      button.textContent = published ? 'Retirada' : 'Publicada';
+      button.className = published 
+        ? 'offer-status text-[10px] font-bold text-steel bg-slate-100 rounded px-2.5 py-1.5 transition' 
+        : 'offer-status text-[10px] font-bold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1.5 transition';
+      
+      const count = document.querySelectorAll('.offer-status[aria-pressed="true"]').length;
+      const countEl = document.getElementById('offer-count');
+      if (countEl) countEl.textContent = count;
+      const heroCount = document.getElementById('hero-offer-count');
+      if (heroCount) heroCount.textContent = count;
+      showToast(published ? 'Oferta retirada del banco público' : 'Oferta publicada para estudiantes');
+    }
+
+    function resolveCase(button) {
+      button.textContent = 'Caso en atención';
+      button.disabled = true;
+      button.className = 'rounded-lg bg-slate-100 px-4 py-2 text-xs font-semibold text-steel cursor-not-allowed';
+      const statusEl = document.querySelector('.case-status');
+      if (statusEl) {
+        statusEl.textContent = 'En atención';
+        statusEl.className = 'case-status text-xs font-bold text-accent bg-blue-50 px-2.5 py-0.5 rounded';
+      }
+      const caseCountEl = document.getElementById('case-count');
+      if (caseCountEl) caseCountEl.textContent = '0';
+      showToast('Caso asignado para atención de Gestión y Vinculación');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      window.setTimeout(() => toast.classList.add('hidden'), 2800);
+    }
+  </script>
+</body>
+</html>

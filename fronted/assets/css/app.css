@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  color-scheme: light;
+  --portal-navy: #15274e;
+  --portal-blue: #1b396a;
+  --portal-surface: #f4f7fb;
+  --portal-border: #dbe3ef;
+  --portal-steel: #64748b;
+  --portal-gold: #b48833;
+  --portal-gold-light: #fbbf24;
+  --portal-signal: #15803d;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  min-width: 320px;
+  background-color: var(--portal-surface);
+  color: #1e293b;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button, input, select, textarea {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.font-mono, code, kbd, samp, pre {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+
+:focus-visible {
+  outline: 2px solid var(--portal-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.001ms !important; }
+}
+
+/* Tabs System */
+.tab-bar {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--portal-border);
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  padding: 0.85rem 0.15rem;
+  margin-right: 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #5c6b72;
+  border-bottom: 2px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
+  cursor: pointer;
+  background: transparent;
+}
+.tab-btn:hover { color: #16233a; }
+.tab-btn.is-active {
+  color: #16233a;
+  border-bottom-color: var(--portal-gold);
+}
+.tab-btn .material-symbols-outlined { font-size: 18px; }
+
+/* Row Hover */
+.row-hover:hover {
+  background: #fbfcfb;
+}
+
+/* Base Navigation active state */
+[data-nav][aria-current="page"] {
+  background: rgb(255 255 255 / 0.16);
+  color: #fff;
+}
+
+[data-action="logout"] {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.8;
+}
+
+/* Card Hover effect */
+.card-interactive {
+  transition: all 0.2s ease-in-out;
+}
+.card-interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(21, 39 78, 0.08);
+}
+
+/* ==========================================================================
+   Navigation Drawer & Content Shift System (Voxelcost Interaction Pattern)
+   ========================================================================== */
+:root {
+  --drawer-width: 320px;
+}
+
+/* Nav Drawer Panel */
+#nav-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--drawer-width);
+  max-width: 85vw;
+  z-index: 50;
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 380ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 380ms cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 380ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* When Drawer is Open (Hover or Pinned) */
+body.drawer-open #nav-drawer {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Mobile & Touch Backdrop */
+#nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 40;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 250ms ease, visibility 250ms ease;
+}
+
+@media (max-width: 1023px) {
+  body.drawer-open #nav-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}
+
+/* Desktop Content Shift */
+@media (min-width: 1024px) {
+  /* Layout Shift Elements (header, main, footer, .layout-shift) */
+  header,
+  main,
+  footer,
+  .layout-shift {
+    transition: margin-left 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Pinned state: reserves 320px and shifts content to the right */
+  body.drawer-pinned header,
+  body.drawer-pinned main,
+  body.drawer-pinned footer,
+  body.drawer-pinned .layout-shift {
+    margin-left: var(--drawer-width);
+  }
+
+  /* Hover-only state: drawer-open without drawer-pinned (overlay mode without shift) */
+  body.drawer-open:not(.drawer-pinned) #nav-drawer {
+    box-shadow: 12px 0 36px rgba(0, 0, 0, 0.32);
+  }
+}
+
+/* Hamburger button in the top-left corner */
+#hamburger-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 35;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #15274e;
+  border: 1px solid #dbe3ef;
+  box-shadow: 0 4px 14px rgba(21, 39, 78, 0.08);
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#hamburger-btn:hover {
+  background-color: #ffffff;
+  box-shadow: 0 6px 18px rgba(21, 39, 78, 0.14);
+  transform: scale(1.04);
+}
+
+#hamburger-btn:active {
+  transform: scale(0.96);
+}
+
+/* Hide floating hamburger when drawer is open */
+body.drawer-open #hamburger-btn {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transform: scale(0.85);
+}
+
+/* Clean top padding for main content without the top bar */
+main {
+  padding-top: 3.5rem !important;
+}
+
+/* Hamburger button state indicator when pinned */
+#hamburger-btn.is-pinned,
+.sidebar-toggle-btn.is-pinned {
+  background-color: #15274e;
+  color: #ffffff;
+}
