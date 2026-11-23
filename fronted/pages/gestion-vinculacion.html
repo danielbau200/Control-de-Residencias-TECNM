@@ -3,422 +3,833 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión y Vinculación · Residencias Profesionales</title>
+  <title>Control de Residencias Profesionales · Ingeniería Industrial · TecNM</title>
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script id="tailwind-config">
+  <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            ink: '#15274e',
-            paper: '#f4f7fb',
-            line: '#dbe3ef',
-            steel: '#64748b',
-            accent: '#1b396a',
-            signal: '#15803d'
-          },
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
+            sans: ['"SF Pro Text"', '"SF Pro Display"', '"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"SF Mono"', '"JetBrains Mono"', 'ui-monospace', 'monospace']
           }
         }
       }
     };
   </script>
-  <link href="../assets/css/app.css" rel="stylesheet">
-  <style>
-    :root { color-scheme: light; }
-    body {
-      background-color: #f4f7fb;
-    }
-  </style>
+  <link href="../assets/css/app.css?v=7" rel="stylesheet">
 </head>
-<body class="min-h-screen font-sans text-slate-800 antialiased flex flex-col justify-between selection:bg-ink/10">
+<body class="antialiased selection:bg-[#007aff]/15">
 
-  <!-- Botón de Menú Hamburguesa en la mera esquina superior izquierda -->
-  <button
-    id="hamburger-btn"
-    onclick="toggleMenu()"
-    aria-label="Abrir menú">
-    <span class="material-symbols-outlined text-2xl">menu</span>
-  </button>
+  <!-- Backdrop Sidebar Móvil -->
+  <div id="sidebar-backdrop" data-action="close-mobile-sidebar"></div>
 
-  <!-- Backdrop para móviles / interacción táctil -->
-  <div id="nav-backdrop"></div>
-
-  <!-- Menú Hamburguesa Desplegable (Lado Izquierdo - Azul Marino Minimalista) -->
-  <aside id="nav-drawer" class="bg-[#15274e] text-white shadow-2xl flex flex-col justify-between p-5 sm:p-6 overflow-y-auto" aria-label="Menú de Navegación">
-    <div>
-      <!-- Encabezado del Menú -->
-      <div class="flex items-center gap-3 pb-4 border-b border-white/10 mb-5">
-        <button class="w-8 h-8 rounded-lg text-white hover:bg-white/15 flex items-center justify-center transition cursor-pointer sidebar-toggle-btn" aria-label="Cerrar o alternar menú" title="Alternar menú">
-          <span class="material-symbols-outlined text-xl">menu</span>
+  <!-- ======================================================================= -->
+  <!-- SIDEBAR CLARO TRASLÚCIDO ESTILO MACOS (236px)                           -->
+  <!-- ======================================================================= -->
+  <aside id="app-sidebar" aria-label="Menú principal del sistema">
+    <div class="p-3 space-y-4">
+      <!-- Cabecera Sobria macOS -->
+      <div class="flex items-center justify-between gap-2 px-1 pt-1">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <div class="w-8 h-8 rounded-[9px] bg-[#1d1d1f] text-white flex items-center justify-center p-1.5 shrink-0 shadow-xs">
+            <svg aria-hidden="true" class="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2 1 7l11 5 9-4.09V17h2V7L12 2Zm0 13-7-3.18V17l7 3.18L19 17v-5.18L12 15Z"/>
+            </svg>
+          </div>
+          <div class="min-w-0">
+            <div class="text-[10.5px] font-medium text-[#6e6e73] truncate">TecNM · Ing. Industrial</div>
+            <div class="text-[13px] font-semibold text-[#1d1d1f] truncate leading-tight">Control Residencias</div>
+          </div>
+        </div>
+        <button type="button" data-action="close-mobile-sidebar" class="lg:hidden w-7 h-7 rounded-md text-[#6e6e73] hover:bg-black/[0.06] flex items-center justify-center" aria-label="Cerrar menú">
+          <span class="material-symbols-outlined text-[18px]">close</span>
         </button>
-        <div>
-          <h2 class="text-xs font-bold text-white uppercase tracking-wider font-mono">Panel Administrativo</h2>
-          <p class="text-[11px] text-blue-200">Vinculación</p>
-        </div>
       </div>
 
-      <!-- Opciones de Navegación del Proyecto -->
-      <nav class="space-y-1 mb-4">
-        <a href="gestion-vinculacion.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-white/15 text-white font-semibold text-xs border border-white/10">
-          <div class="flex items-center gap-2.5">
-            <span class="material-symbols-outlined text-lg text-amber-400">admin_panel_settings</span>
-            <span>Gestión y Vinculación</span>
-          </div>
-        </a>
-
-        <a href="reticula.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
-          <div class="flex items-center gap-2.5">
-            <span class="material-symbols-outlined text-lg">grid_view</span>
-            <span>Retícula Curricular</span>
-          </div>
-          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
-        </a>
-
-        <a href="residencias.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
-          <div class="flex items-center gap-2.5">
-            <span class="material-symbols-outlined text-lg">business_center</span>
-            <span>Residencias</span>
-          </div>
-          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
-        </a>
-
-        <a href="temario.html" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-blue-100 hover:text-white hover:bg-white/10 font-medium text-xs transition">
-          <div class="flex items-center gap-2.5">
-            <span class="material-symbols-outlined text-lg">menu_book</span>
-            <span>Temario</span>
-          </div>
-          <span class="material-symbols-outlined text-sm text-blue-300/70">chevron_right</span>
-        </a>
-      </nav>
-
-      <!-- Notificaciones / Trámites -->
-      <div class="border-t border-white/10 pt-4">
-        <div class="flex items-center gap-2 mb-2.5 px-1">
-          <div class="relative inline-flex items-center">
-            <span class="material-symbols-outlined text-amber-400 text-lg">notifications</span>
-            <span class="absolute -top-1 -right-1 text-[10px] font-bold text-amber-400 leading-none">2</span>
-          </div>
-          <span class="text-xs font-bold text-white">Avisos y Trámites</span>
+      <!-- Segmented Control de Perfil (Usuario 1 Gestión | Usuario 2 Academia) -->
+      <div class="space-y-1.5">
+        <div class="text-[10.5px] font-semibold uppercase tracking-wider text-[#86868b] px-1">Perfil Activo</div>
+        <div class="mac-segmented w-full grid grid-cols-2">
+          <button type="button" id="role-btn-gestion1" data-action="switch-role" data-role="gestion1" class="mac-seg-btn is-active" title="Usuario 1 · Gestión">
+            Usuario 1
+          </button>
+          <button type="button" id="role-btn-academia" data-action="switch-role" data-role="academia" class="mac-seg-btn" title="Usuario 2 · Academia">
+            Usuario 2
+          </button>
         </div>
-      </div>
-        
-        <div class="space-y-1.5 text-xs">
-          <div class="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition cursor-pointer" onclick="activateAdminTab('solicitudes'); closeNavDrawer();">
-            <div class="flex items-center justify-between text-white font-medium text-[11px]">
-              <span>Solicitud de Alberto Díaz</span>
-              <span class="text-[10px] text-amber-300 font-mono">Pendiente</span>
-            </div>
-          </div>
-        </div>
+        <p class="text-[11px] text-[#6e6e73] leading-snug px-1" id="sidebar-role-desc">
+          Recepción de hojas, oficios P.A/P.B, pausados y avisos Outlook
+        </p>
       </div>
 
+      <!-- Navegación Dinámica por Rol -->
+      <div class="space-y-1 pt-1 border-t border-black/[0.06]">
+        <div class="text-[10.5px] font-semibold uppercase tracking-wider text-[#86868b] px-1.5 pt-1 pb-0.5">Módulos</div>
+        <nav id="sidebar-nav" class="space-y-0.5" aria-label="Módulos del sistema"></nav>
+      </div>
     </div>
 
-    <!-- Pie del Menú con Cerrar Sesión -->
-    <div class="border-t border-white/10 pt-4 mt-6">
-      <a href="login.html" data-action="logout" class="w-full py-2 px-3 rounded-lg bg-white/10 hover:bg-rose-500/20 text-blue-100 hover:text-rose-200 text-xs font-bold transition flex items-center justify-center gap-2 border border-white/10 hover:border-rose-400/30">
-        <span class="material-symbols-outlined text-base">logout</span>
-        <span>Cerrar Sesión</span>
-      </a>
+    <!-- Pie minimalista -->
+    <div class="p-3 border-t border-black/[0.06] space-y-2">
+      <div id="db-status-sidebar" class="px-2 py-1.5 rounded-lg bg-black/[0.04] flex items-center justify-between gap-2 text-[10.5px]">
+        <span class="flex items-center gap-1.5 font-medium text-[#1d1d1f] truncate">
+          <span id="db-status-dot" class="w-2 h-2 rounded-full bg-[#86868b] shrink-0"></span>
+          <span id="db-status-label" class="truncate">Conectando BD...</span>
+        </span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <button type="button" data-action="open-shortcuts" class="mac-btn-secondary flex-1 text-[11px] py-1 min-h-[28px]">
+          <span class="material-symbols-outlined text-[14px] text-[#6e6e73]">keyboard</span>
+          <span>Atajos</span>
+        </button>
+        <button type="button" id="btn-sync-reset" data-action="reset-database" title="Sincronizar o restaurar registros"
+          class="mac-btn-secondary text-[11px] py-1 px-2.5 min-h-[28px]">
+          <span class="material-symbols-outlined text-[14px] text-[#6e6e73]">sync</span>
+          <span id="btn-sync-label">Sync</span>
+        </button>
+      </div>
     </div>
   </aside>
 
-  <!-- Contenido Principal -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8 flex-grow w-full">
+  <!-- ======================================================================= -->
+  <!-- CONTENEDOR PRINCIPAL + UNIFIED GLASS TOOLBAR (56px)                     -->
+  <!-- ======================================================================= -->
+  <div class="app-shell-main">
+    <header id="app-topbar" class="px-4 sm:px-6 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <button type="button" data-action="toggle-mobile-sidebar"
+          class="lg:hidden mac-btn-secondary w-8 h-8 p-0 shrink-0" aria-label="Abrir menú">
+          <span class="material-symbols-outlined text-[18px]">menu</span>
+        </button>
+        <div class="min-w-0">
+          <h1 id="topbar-title" class="text-[15px] font-semibold text-[#1d1d1f] truncate leading-tight">
+            Expedientes y Consultas
+          </h1>
+          <p id="topbar-subtitle" class="text-[11px] text-[#6e6e73] truncate hidden sm:block">
+            Búsqueda multicampo sobre solicitudes impresas, oficios, asesores y avisos Outlook
+          </p>
+        </div>
+      </div>
 
-    <!-- Navegación por pestañas -->
-    <div class="tab-bar mb-6" role="tablist" aria-label="Secciones de administración">
-      <button class="tab-btn is-active" role="tab" id="tab-adm-solicitudes" aria-selected="true" aria-controls="panel-adm-solicitudes" data-admin-tab="solicitudes" onclick="activateAdminTab('solicitudes')">
-        <span class="material-symbols-outlined">assignment</span> Solicitudes de Alumnos
-      </button>
-      <button class="tab-btn" role="tab" id="tab-adm-empresas" aria-selected="false" aria-controls="panel-adm-empresas" data-admin-tab="empresas" onclick="activateAdminTab('empresas')">
-        <span class="material-symbols-outlined">domain</span> Empresas y Ofertas
-      </button>
-      <button class="tab-btn" role="tab" id="tab-adm-casos" aria-selected="false" aria-controls="panel-adm-casos" data-admin-tab="casos" onclick="activateAdminTab('casos')">
-        <span class="material-symbols-outlined">support_agent</span> Casos Especiales
+      <!-- Buscador Spotlight (⌘K) + CTA Principal -->
+      <div class="flex items-center gap-2 shrink-0 min-w-0">
+        <div id="global-search-wrapper" class="relative hidden md:block w-56 xl:w-72">
+          <span class="material-symbols-outlined text-[16px] text-[#86868b] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">search</span>
+          <input type="text" id="global-search-input"
+            placeholder="Buscar matrícula, alumno..."
+            class="mac-spotlight-input w-full pl-8 pr-11 py-1.5">
+          <kbd class="absolute right-2 top-1/2 -translate-y-1/2 px-1.5 py-0.5 text-[10px] font-mono text-[#86868b] bg-white/80 border border-black/10 rounded">⌘K</kbd>
+          <div id="global-search-dropdown" class="hidden absolute left-0 right-0 top-full mt-1.5 bg-white/95 backdrop-blur-xl border border-black/10 rounded-xl shadow-2xl overflow-hidden z-50"></div>
+        </div>
+
+        <div id="topbar-primary-cta" class="shrink-0"></div>
+      </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- ÁREA DE VISTAS                                                        -->
+    <!-- ===================================================================== -->
+    <main class="flex-1 w-full max-w-full overflow-x-clip px-4 sm:px-6 py-5 space-y-4">
+
+      <!-- =================================================================== -->
+      <!-- VISTA 1: EXPEDIENTES Y CONSULTAS UNIVERSALES                        -->
+      <!-- =================================================================== -->
+      <section data-view-panel="expedientes" class="space-y-4">
+        <!-- 4 KPIs Minimalistas -->
+        <div id="expedientes-kpis" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3"></div>
+
+        <!-- Barra de Búsqueda y Filtros -->
+        <div class="mac-card p-3.5 sm:p-4 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5">
+            <div class="sm:col-span-2 relative">
+              <span class="material-symbols-outlined text-[17px] text-[#86868b] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">search</span>
+              <input type="text" id="filter-q"
+                placeholder="Filtrar por matrícula, alumno, empresa, asesor, oficio..."
+                class="mac-input w-full pl-8 pr-3 py-1.5">
+            </div>
+
+            <select id="filter-semestre" class="mac-select py-1.5 px-2.5"></select>
+
+            <select id="filter-estado" class="mac-select py-1.5 px-2.5">
+              <option value="ALL">Estado: Todos</option>
+              <option value="Expediente Completo">Expediente Completo</option>
+              <option value="PENDIENTE_ACADEMIA">Pendiente Academia / Oficio</option>
+              <option value="En Revisión por Academia">En Revisión por Academia</option>
+              <option value="Pendiente Asignar Asesor (Academia)">Pendiente Asignar Asesor</option>
+              <option value="En Trámite (Falta Oficio Asesor)">Falta Oficio P.B</option>
+              <option value="Pausado / Sin Oficio">Pausado / Sin Oficio</option>
+              <option value="Detenido por Servicio Social">Detenido por Servicio Social</option>
+              <option value="Caso Especial / Reasignación">Caso Especial / Reasignación</option>
+            </select>
+
+            <select id="filter-ss" class="mac-select py-1.5 px-2.5">
+              <option value="ALL">Servicio Social: Todos</option>
+              <option value="Liberado">S.S. Liberado</option>
+              <option value="SIN_SS">Por verificar / No liberado</option>
+              <option value="No Liberado (Irregular)">No Liberado (Bloqueado)</option>
+            </select>
+
+            <select id="filter-asesor" class="mac-select py-1.5 px-2.5"></select>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+            <div class="flex flex-wrap items-center gap-2">
+              <button type="button" data-action="toggle-advanced-filters" class="mac-btn-secondary">
+                <span class="material-symbols-outlined text-[15px] text-[#6e6e73]">tune</span>
+                <span>Más filtros</span>
+              </button>
+              <div id="active-filter-chips" class="hidden flex flex-wrap items-center gap-1.5"></div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <select id="sort-by" class="mac-select py-1 px-2.5 text-[11.5px]">
+                <option value="id">Orden: Registro (#ID)</option>
+                <option value="nombre">Orden: Alumno (A–Z)</option>
+                <option value="control">Orden: N° Control</option>
+                <option value="fechaEntregaFisica">Orden: Fecha Entrega</option>
+                <option value="estado">Orden: Estado</option>
+              </select>
+              <button type="button" data-action="toggle-density" class="mac-btn-secondary">
+                Vista Compacta
+              </button>
+              <button type="button" data-action="export-csv" class="mac-btn-secondary">
+                <span class="material-symbols-outlined text-[15px] text-[#1b7a34]">download</span>
+                <span>Exportar CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="advanced-filters-panel" class="hidden pt-3 border-t border-black/[0.06] grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <select id="filter-especialidad" class="mac-select py-1.5 px-2.5"></select>
+            <select id="filter-empresa" class="mac-select py-1.5 px-2.5"></select>
+            <select id="filter-oficio" class="mac-select py-1.5 px-2.5">
+              <option value="ALL">Oficios: Todos</option>
+              <option value="SIN_PA">Falta Oficio Autorización (P.A)</option>
+              <option value="SIN_PB">Falta Oficio Asesor (P.B)</option>
+              <option value="COMPLETOS">Con P.A y P.B emitidos</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tabla Maestra Finder-style -->
+        <div class="mac-card overflow-hidden">
+          <div class="px-4 py-2.5 border-b border-black/[0.06] flex flex-wrap items-center justify-between gap-2 bg-[#fbfbfd]">
+            <div id="results-counter" class="text-[11.5px] font-medium text-[#6e6e73]">Cargando expedientes...</div>
+            <div class="text-[11px] text-[#86868b]">Clic en una fila para inspeccionar el expediente</div>
+          </div>
+
+          <div class="table-scroll-container">
+            <table id="expedientes-table" class="data-table">
+              <thead>
+                <tr>
+                  <th>Control / Semestre</th>
+                  <th>Alumno / Especialidad</th>
+                  <th>Anteproyecto y Empresa</th>
+                  <th>Avance y Oficios</th>
+                  <th>Asesor Interno</th>
+                  <th>Estado y S.S.</th>
+                </tr>
+              </thead>
+              <tbody id="expedientes-tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="px-4 py-2.5 border-t border-black/[0.06] bg-[#fbfbfd] flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2 text-[#6e6e73]">
+              <span>Filas:</span>
+              <select id="page-size" class="mac-select num-tabular py-1 px-2 text-[11.5px]">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="0">Todos</option>
+              </select>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="pagination-info" class="num-tabular text-[11px] text-[#6e6e73] mr-1">Página 1 de 1</span>
+              <button type="button" id="btn-prev-page" data-action="prev-page" class="mac-btn-secondary py-1 min-h-[28px]">
+                ← Anterior
+              </button>
+              <button type="button" id="btn-next-page" data-action="next-page" class="mac-btn-secondary py-1 min-h-[28px]">
+                Siguiente →
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 2: FORMULARIO GUIADO DE RECEPCIÓN DE SOLICITUD                -->
+      <!-- =================================================================== -->
+      <section data-view-panel="registro" hidden>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <div class="lg:col-span-8 mac-card overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-black/[0.06] bg-[#fbfbfd] flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span id="form-mode-badge" class="text-[10.5px] font-semibold px-2 py-0.5 rounded-full bg-[#007aff]/12 text-[#0066cc]">Nueva Solicitud Física</span>
+                <h2 class="text-sm font-semibold text-[#1d1d1f] mt-1">Captura de Solicitud de Residencias (Hojas Impresas)</h2>
+              </div>
+              <button type="button" data-action="reset-form" class="mac-btn-secondary">
+                Limpiar formulario
+              </button>
+            </div>
+
+            <form id="form-solicitud" class="p-4 sm:p-6 space-y-6">
+              <input type="hidden" id="f-id" value="">
+
+              <!-- Bloque 1 -->
+              <div id="form-sec-alumno" class="space-y-4">
+                <div class="readonly-section-banner hidden">
+                  <span class="material-symbols-outlined text-[16px]">lock</span>
+                  <span>Solo lectura · Los datos del alumno y Servicio Social son capturados por Oficina de Gestión</span>
+                </div>
+                <div class="border-b border-black/[0.06] pb-2">
+                  <h3 class="text-[11.5px] font-semibold uppercase tracking-wider text-[#6e6e73]">1. Alumno y Verificación de Servicio Social</h3>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                  <div>
+                    <label for="f-control" class="block text-xs font-semibold text-[#1d1d1f] mb-1">N° de Control *</label>
+                    <input type="text" id="f-control" required placeholder="Ej. 22071201" class="mac-input num-tabular w-full px-3 py-1.5">
+                    <p id="f-control-hint" class="text-[11px] text-[#6e6e73] mt-1">Verifica si el estudiante ya tiene expediente físico previo.</p>
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label for="f-nombre" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Nombre Completo del Alumno *</label>
+                    <input type="text" id="f-nombre" required placeholder="APELLIDOS NOMBRE(S)" class="mac-input w-full px-3 py-1.5 uppercase">
+                  </div>
+                  <div>
+                    <label for="f-semestre" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Semestre *</label>
+                    <select id="f-semestre" class="mac-select w-full px-3 py-1.5">
+                      <option value="Ago-Dic 2026">Ago-Dic 2026</option>
+                      <option value="Ene-Jun 2026">Ene-Jun 2026</option>
+                      <option value="Ene-Jun 2027">Ene-Jun 2027</option>
+                      <option value="Ago-Dic 2025">Ago-Dic 2025</option>
+                    </select>
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label for="f-correo" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Correo Institucional (Outlook)</label>
+                    <input type="email" id="f-correo" placeholder="l22071201@cdmadero.tecnm.mx" class="mac-input w-full px-3 py-1.5 lowercase">
+                    <p class="text-[11px] text-[#6e6e73] mt-1">Se usa para enviar el aviso en Outlook cuando sus oficios estén listos.</p>
+                  </div>
+                </div>
+
+                <div class="space-y-1.5">
+                  <label class="block text-xs font-semibold text-[#1d1d1f]">Validación de Servicio Social *</label>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+                    <label class="ss-radio-card is-selected-ok">
+                      <input type="radio" name="f-ss-radio" value="Liberado" checked>
+                      <span class="flex items-center gap-1.5 text-xs font-semibold text-[#1b7a34]">
+                        <span class="material-symbols-outlined text-[16px]">verified</span>
+                        Sí · Servicio Social Liberado
+                      </span>
+                      <span class="text-[11px] text-[#6e6e73]">Acreditó liberación de Servicio Social.</span>
+                    </label>
+                    <label class="ss-radio-card">
+                      <input type="radio" name="f-ss-radio" value="Por verificar">
+                      <span class="flex items-center gap-1.5 text-xs font-semibold text-[#b25000]">
+                        <span class="material-symbols-outlined text-[16px]">help</span>
+                        Pendiente · Por Verificar
+                      </span>
+                      <span class="text-[11px] text-[#6e6e73]">Entregó hojas, falta confirmar S.S.</span>
+                    </label>
+                    <label class="ss-radio-card">
+                      <input type="radio" name="f-ss-radio" value="No Liberado (Irregular)">
+                      <span class="flex items-center gap-1.5 text-xs font-semibold text-[#c92a2a]">
+                        <span class="material-symbols-outlined text-[16px]">gpp_bad</span>
+                        No Liberado (Irregular)
+                      </span>
+                      <span class="text-[11px] text-[#6e6e73]">Entregó hojas sin acreditar S.S. · Detiene/pausa trámite.</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bloque 2 -->
+              <div id="form-sec-proyecto" class="space-y-4">
+                <div class="readonly-section-banner hidden">
+                  <span class="material-symbols-outlined text-[16px]">lock</span>
+                  <span>Solo lectura · Datos del anteproyecto entregados en ventanilla</span>
+                </div>
+                <div class="border-b border-black/[0.06] pb-2">
+                  <h3 class="text-[11.5px] font-semibold uppercase tracking-wider text-[#6e6e73]">2. Anteproyecto y Empresa Receptora</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                  <div class="sm:col-span-2 lg:col-span-3">
+                    <label for="f-proyecto" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Título del Anteproyecto *</label>
+                    <textarea id="f-proyecto" rows="2" required placeholder="Nombre completo del proyecto impreso..." class="mac-textarea w-full px-3 py-2 uppercase"></textarea>
+                  </div>
+                  <div>
+                    <label for="f-empresa" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Empresa Receptora *</label>
+                    <input type="text" id="f-empresa" list="empresas-datalist" required placeholder="Nombre de la empresa..." class="mac-input w-full px-3 py-1.5 uppercase">
+                    <datalist id="empresas-datalist"></datalist>
+                  </div>
+                  <div>
+                    <label for="f-asesor-ext" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Asesor Externo</label>
+                    <input type="text" id="f-asesor-ext" placeholder="Ej. ING. JUAN PÉREZ" class="mac-input w-full px-3 py-1.5 uppercase">
+                  </div>
+                  <div>
+                    <label for="f-especialidad" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Especialidad</label>
+                    <input type="text" id="f-especialidad" list="esp-datalist" placeholder="LOGÍSTICA / MANUFACTURA / CALIDAD" class="mac-input w-full px-3 py-1.5 uppercase">
+                    <datalist id="esp-datalist">
+                      <option value="CALIDAD Y PRODUCTIVIDAD"></option>
+                      <option value="CALIDAD"></option>
+                      <option value="LOGÍSTICA"></option>
+                      <option value="MANUFACTURA"></option>
+                      <option value="INDUSTRIAL GENERAL"></option>
+                    </datalist>
+                  </div>
+                  <div>
+                    <label for="f-horario" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Horario</label>
+                    <input type="text" id="f-horario" placeholder="DE 08:00 A 16:00 HORAS" class="mac-input w-full px-3 py-1.5 uppercase">
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label for="f-periodo" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Período de Realización</label>
+                    <input type="text" id="f-periodo" placeholder="Ej. 17 AGOSTO 2026 AL 17 ENERO 2027" class="mac-input w-full px-3 py-1.5 uppercase">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bloque 3 -->
+              <div id="form-sec-gestion" class="space-y-4">
+                <div class="readonly-section-banner hidden">
+                  <span class="material-symbols-outlined text-[16px]">lock</span>
+                  <span>Solo lectura · Control de fechas y oficios administrado por Gestión</span>
+                </div>
+                <div class="border-b border-black/[0.06] pb-2">
+                  <h3 class="text-[11.5px] font-semibold uppercase tracking-wider text-[#6e6e73]">3. Control de Gestión (Fechas y Oficios)</h3>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                  <div>
+                    <label for="f-fecha-fisica" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Fecha Entrega Física</label>
+                    <div class="flex gap-1.5">
+                      <input type="date" id="f-fecha-fisica" class="mac-input num-tabular w-full px-2.5 py-1.5">
+                      <button type="button" data-action="set-today" data-target-input="f-fecha-fisica" class="mac-btn-secondary px-2.5 min-h-[30px]">Hoy</button>
+                    </div>
+                  </div>
+                  <div>
+                    <label for="f-fecha-academia" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Fecha Entrega a Academia</label>
+                    <div class="flex gap-1.5">
+                      <input type="date" id="f-fecha-academia" class="mac-input num-tabular w-full px-2.5 py-1.5">
+                      <button type="button" data-action="set-today" data-target-input="f-fecha-academia" class="mac-btn-secondary px-2.5 min-h-[30px]">Hoy</button>
+                    </div>
+                  </div>
+                  <div>
+                    <label for="f-estado" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Estado del Expediente *</label>
+                    <select id="f-estado" class="mac-select w-full px-2.5 py-1.5 font-medium">
+                      <option value="En Revisión por Academia">1. En Revisión por Academia</option>
+                      <option value="Pendiente Asignar Asesor (Academia)">2. Aceptado · Pendiente Asesor</option>
+                      <option value="En Trámite (Falta Oficio Asesor)">3. Asesor Asignado · Falta P.B</option>
+                      <option value="Expediente Completo">4. Expediente Completo</option>
+                      <option value="Pausado / Sin Oficio">Excepción: Trámite Pausado / Inconcluso</option>
+                      <option value="Detenido por Servicio Social">Excepción: Detenido por Servicio Social</option>
+                      <option value="Caso Especial / Reasignación">Excepción: Caso Especial / Reasignación</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="f-oficio-aut" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Oficio Autorización (P.A)</label>
+                    <div class="flex gap-1.5">
+                      <input type="text" id="f-oficio-aut" placeholder="P.A149/2026" class="mac-input num-tabular w-full px-2.5 py-1.5 uppercase">
+                      <button type="button" data-action="suggest-pa" class="mac-btn-secondary px-2.5 min-h-[30px] text-[#007aff]">Auto</button>
+                    </div>
+                  </div>
+                  <div>
+                    <label for="f-fecha-imp" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Fecha Impresión Oficio</label>
+                    <input type="date" id="f-fecha-imp" class="mac-input num-tabular w-full px-2.5 py-1.5">
+                  </div>
+                  <div>
+                    <label for="f-notificado" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Notificado Pasar a Recoger</label>
+                    <input type="date" id="f-notificado" class="mac-input num-tabular w-full px-2.5 py-1.5">
+                  </div>
+                  <div>
+                    <label for="f-fecha-aut-correo" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Envío Aut. por Correo</label>
+                    <input type="date" id="f-fecha-aut-correo" class="mac-input num-tabular w-full px-2.5 py-1.5">
+                  </div>
+                  <div>
+                    <label for="f-oficio-asesor" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Oficio Asignación Asesor (P.B)</label>
+                    <div class="flex gap-1.5">
+                      <input type="text" id="f-oficio-asesor" placeholder="P.B159/2026" class="mac-input num-tabular w-full px-2.5 py-1.5 uppercase">
+                      <button type="button" data-action="suggest-pb" class="mac-btn-secondary px-2.5 min-h-[30px] text-[#007aff]">Auto</button>
+                    </div>
+                  </div>
+                  <div>
+                    <label for="f-fecha-asesor-correo" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Envío Asesor por Correo</label>
+                    <input type="date" id="f-fecha-asesor-correo" class="mac-input num-tabular w-full px-2.5 py-1.5">
+                  </div>
+                  <div class="sm:col-span-2 lg:col-span-3">
+                    <label for="f-observaciones" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Observaciones / Motivo de Pausa o Caso Especial</label>
+                    <input type="text" id="f-observaciones" placeholder="Notas internas para Gestión y Academia..." class="mac-input w-full px-3 py-1.5">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bloque 4 -->
+              <div id="form-sec-academia" class="space-y-4 rounded-xl border border-[#5856d6]/25 bg-[#5856d6]/[0.04] p-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#5856d6]/15 pb-2">
+                  <h3 class="text-[11.5px] font-semibold uppercase tracking-wider text-[#4b49b6]">4. Dictamen de Academia y Asesor Interno</h3>
+                  <button type="button" id="btn-unlock-academia-fields" data-action="unlock-academia" class="mac-btn-secondary py-1 min-h-[28px] text-[11px]">
+                    <span class="material-symbols-outlined text-[14px]">edit</span> Habilitar corrección Academia
+                  </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3.5">
+                  <div>
+                    <label for="f-revisado-acad" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Dictamen Academia</label>
+                    <select id="f-revisado-acad" class="mac-select w-full px-2.5 py-1.5 font-medium">
+                      <option value="Pendiente">Pendiente</option>
+                      <option value="Si">Sí (Autorizado)</option>
+                      <option value="ASIGNADO">ASIGNADO</option>
+                      <option value="NO">NO / Reasignación</option>
+                    </select>
+                  </div>
+                  <div class="sm:col-span-2">
+                    <label for="f-asesor-int" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Docente Asesor Interno</label>
+                    <select id="f-asesor-int" class="mac-select w-full px-2.5 py-1.5 font-medium"></select>
+                  </div>
+                  <div>
+                    <label for="f-folio-acad" class="block text-xs font-semibold text-[#1d1d1f] mb-1">Folio Academia</label>
+                    <input type="text" id="f-folio-acad" placeholder="26-1-1" class="mac-input num-tabular w-full px-2.5 py-1.5">
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-black/[0.06] flex items-center justify-end gap-2.5">
+                <button type="button" data-action="navigate" data-view="expedientes" class="mac-btn-secondary">
+                  Cancelar
+                </button>
+                <button type="submit" class="mac-btn-primary">
+                  <span class="material-symbols-outlined text-[16px]">save</span>
+                  <span>Guardar Expediente</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Columna Derecha Sticky -->
+          <div class="lg:col-span-4 space-y-4 lg:sticky lg:top-[76px]">
+            <div class="mac-card p-4 space-y-3">
+              <div class="text-[11px] font-semibold uppercase tracking-wider text-[#6e6e73] border-b border-black/[0.06] pb-2">
+                Vista Previa en Tiempo Real
+              </div>
+              <div id="form-live-preview"></div>
+            </div>
+
+            <div class="mac-card p-4 space-y-2" style="background: rgba(255, 149, 0, 0.06); border-color: rgba(255, 149, 0, 0.22);">
+              <div class="flex items-center gap-2 text-[#b25000] text-xs font-semibold">
+                <span class="material-symbols-outlined text-[17px]">gpp_maybe</span>
+                <span>Control de Servicio Social y Pausados</span>
+              </div>
+              <p class="text-[11.5px] text-[#6e6e73] leading-relaxed">
+                La oficina recibe solicitudes impresas sin poder consultar previamente si el alumno acreditó Servicio Social.
+                Si se detecta después, marca <b class="text-[#1d1d1f]">"Pendiente · Por Verificar"</b> o <b class="text-[#1d1d1f]">"No Liberado"</b> para pausar el proyecto ordenadamente.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 3: MESA DE EMISIÓN DE OFICIOS (TABLA FINDER LIMPIA)           -->
+      <!-- =================================================================== -->
+      <section data-view-panel="oficios" hidden class="space-y-4">
+        <div id="oficios-kpis" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3"></div>
+
+        <div class="mac-card overflow-hidden">
+          <div class="p-3.5 sm:p-4 border-b border-black/[0.06] flex flex-wrap items-center justify-between gap-3 bg-[#fbfbfd]">
+            <div class="mac-segmented">
+              <button type="button" class="mac-seg-btn is-active" data-action="switch-oficios-subtab" data-oficios-subtab="pendientes">
+                Cola de Oficios Pendientes
+              </button>
+              <button type="button" class="mac-seg-btn" data-action="switch-oficios-subtab" data-oficios-subtab="emitidos">
+                Oficios Completos (P.A y P.B)
+              </button>
+            </div>
+            <div class="text-[11px] text-[#6e6e73]">Emisión rápida de folios consecutivos y vista previa imprimible</div>
+          </div>
+          <div class="table-scroll-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Alumno</th>
+                  <th>Anteproyecto</th>
+                  <th>Oficio P.A</th>
+                  <th>Asesor / P.B</th>
+                  <th>Notificado</th>
+                  <th class="text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="oficios-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 4: ACADEMIA · BANDEJA DE ASIGNACIÓN Y MATRIZ DE DOCENTES      -->
+      <!-- =================================================================== -->
+      <section data-view-panel="academia" hidden class="space-y-4">
+        <div id="academia-kpis" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3"></div>
+
+        <div class="mac-segmented">
+          <button type="button" class="mac-seg-btn is-active" data-action="switch-academia-subtab" data-academia-subtab="bandeja">
+            <span class="material-symbols-outlined text-[15px]">assignment_ind</span>
+            <span>Bandeja de Asignación de Asesores</span>
+          </button>
+          <button type="button" class="mac-seg-btn" data-action="switch-academia-subtab" data-academia-subtab="docentes">
+            <span class="material-symbols-outlined text-[15px]">groups</span>
+            <span>Matriz de Carga Docente (42)</span>
+          </button>
+        </div>
+
+        <div id="academia-subpanel-bandeja" class="mac-card overflow-hidden">
+          <div class="p-4 border-b border-black/[0.06] bg-[#fbfbfd]">
+            <h2 class="text-sm font-semibold text-[#1d1d1f]">Anteproyectos Pendientes de Dictamen o Asesor Interno</h2>
+            <p class="text-xs text-[#6e6e73] mt-0.5">El selector ordena automáticamente a los 42 docentes de menor a mayor carga actual.</p>
+          </div>
+          <div id="academia-pending-list" class="divide-y divide-black/[0.06]"></div>
+        </div>
+
+        <div id="academia-subpanel-docentes" hidden class="mac-card overflow-hidden">
+          <div class="p-4 border-b border-black/[0.06] flex flex-wrap items-center justify-between gap-3 bg-[#fbfbfd]">
+            <div>
+              <h2 class="text-sm font-semibold text-[#1d1d1f]">Plantilla Docente de Ingeniería Industrial (42 Maestros)</h2>
+              <p class="text-xs text-[#6e6e73]">Carga en tiempo real comparada con su capacidad sugerida según jornada.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <input type="text" id="filter-maestro-q" placeholder="Buscar docente..." class="mac-input px-3 py-1.5">
+              <select id="filter-maestro-jornada" class="mac-select px-2.5 py-1.5">
+                <option value="ALL">Jornada: Todas</option>
+                <option value="40 hrs">40 hrs</option>
+                <option value="30 hrs">30 hrs</option>
+                <option value="20 hrs">20 hrs</option>
+                <option value="Por horas">Por horas</option>
+              </select>
+              <select id="filter-maestro-beca" class="mac-select px-2.5 py-1.5">
+                <option value="ALL">Beca: Todas</option>
+                <option value="EDD">Solo EDD</option>
+                <option value="SIN_BECA">Sin Beca EDD</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-scroll-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>N°</th>
+                  <th>Docente</th>
+                  <th>Jornada</th>
+                  <th>Beca</th>
+                  <th class="text-center">Histórico Ene–Jun</th>
+                  <th class="text-center">Histórico Ago–Dic</th>
+                  <th>Saturación Actual</th>
+                  <th class="text-right">Residentes</th>
+                </tr>
+              </thead>
+              <tbody id="maestros-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 5: TRÁMITES PAUSADOS Y ALERTAS DE SERVICIO SOCIAL             -->
+      <!-- =================================================================== -->
+      <section data-view-panel="excepciones" hidden class="space-y-4">
+        <div class="mac-card overflow-hidden">
+          <div class="p-3.5 sm:p-4 border-b border-black/[0.06] flex flex-wrap items-center justify-between gap-3 bg-[#fbfbfd]">
+            <div class="mac-segmented">
+              <button type="button" class="mac-seg-btn is-active" data-action="switch-exc-subtab" data-exc-subtab="pausados">
+                <span>Pausados / Reasignación</span>
+                <span id="exc-badge-pausados" class="num-tabular text-[10px] px-1.5 py-0.2 rounded-full bg-[#ff9500]/15 text-[#b25000]">0</span>
+              </button>
+              <button type="button" class="mac-seg-btn" data-action="switch-exc-subtab" data-exc-subtab="ss">
+                <span>Alertas Servicio Social</span>
+                <span id="exc-badge-ss" class="num-tabular text-[10px] px-1.5 py-0.2 rounded-full bg-[#ff3b30]/15 text-[#c92a2a]">0</span>
+              </button>
+            </div>
+            <input type="text" id="exc-search" placeholder="Filtrar alumno o matrícula..." class="mac-input px-3 py-1.5 w-full sm:w-64">
+          </div>
+          <div id="excepciones-list" class="divide-y divide-black/[0.06]"></div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VISTA 6: BITÁCORA AUDITABLE DE MOVIMIENTOS                          -->
+      <!-- =================================================================== -->
+      <section data-view-panel="bitacora" hidden class="space-y-4">
+        <div class="mac-card overflow-hidden">
+          <div class="p-4 border-b border-black/[0.06] flex flex-wrap items-center justify-between gap-3 bg-[#fbfbfd]">
+            <div>
+              <h2 class="text-sm font-semibold text-[#1d1d1f]">Historial de Movimientos del Departamento</h2>
+              <p class="text-xs text-[#6e6e73]">Registro automático de altas, emisión de oficios, asignaciones de Academia y bloqueos.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <input type="text" id="bitacora-q" placeholder="Buscar alumno, matrícula u operación..." class="mac-input px-3 py-1.5">
+              <select id="bitacora-usuario" class="mac-select px-2.5 py-1.5">
+                <option value="ALL">Responsable: Todos</option>
+                <option value="GESTION_1">Usuario 1 · Gestión</option>
+                <option value="ACADEMIA">Usuario 2 · Academia</option>
+                <option value="SISTEMA">SISTEMA</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-scroll-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Fecha / Hora</th>
+                  <th>Responsable</th>
+                  <th>Operación</th>
+                  <th>Alumno</th>
+                  <th>Cambio de Estado</th>
+                  <th>Detalle del Movimiento</th>
+                </tr>
+              </thead>
+              <tbody id="bitacora-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer Institucional Compacto -->
+    <footer class="border-t border-black/[0.06] bg-white/70 px-4 sm:px-6 py-2.5 text-[11px] text-[#6e6e73] flex flex-wrap items-center justify-between gap-2">
+      <div><b class="text-[#1d1d1f] font-semibold">TecNM</b> · Ingeniería Industrial · Control Interno de Residencias Profesionales</div>
+      <div class="num-tabular" id="footer-role-indicator">Sesión activa: Gestión · Usuario 1</div>
+    </footer>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- SLIDE-OVER SHEET DRAWER DERECHO (EXPEDIENTE DETALLADO)                  -->
+  <!-- ======================================================================= -->
+  <div id="detail-backdrop" data-action="close-detail"></div>
+  <aside id="detail-drawer" aria-label="Detalle del expediente">
+    <div class="p-4 sm:p-5 border-b border-black/[0.08] flex items-start justify-between gap-3 bg-white/90 backdrop-blur-md">
+      <div class="min-w-0">
+        <div id="drawer-meta" class="num-tabular text-[11px] font-semibold text-[#007aff]">Expediente</div>
+        <h2 id="drawer-title" class="text-[15px] font-semibold text-[#1d1d1f] truncate mt-0.5">Nombre del Alumno</h2>
+      </div>
+      <button type="button" data-action="close-detail" class="mac-btn-secondary w-8 h-8 p-0 rounded-full" aria-label="Cerrar panel">
+        <span class="material-symbols-outlined text-[18px]">close</span>
       </button>
     </div>
 
-    <!-- PANEL 1: SOLICITUDES (Activo por defecto) -->
-    <section id="panel-adm-solicitudes" role="tabpanel" aria-labelledby="tab-adm-solicitudes" data-admin-panel="solicitudes">
-      <section class="bg-white border border-line rounded-xl overflow-hidden">
-        <div class="p-5 sm:p-6 border-b border-line flex items-center justify-between gap-3">
+    <div id="drawer-body" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4"></div>
+
+    <div id="drawer-footer" class="p-3.5 sm:p-4 border-t border-black/[0.08] bg-white/90 backdrop-blur-md flex flex-wrap items-center justify-between gap-2"></div>
+  </aside>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL DE VISTA PREVIA DE OFICIO IMPRIMIBLE                              -->
+  <!-- ======================================================================= -->
+  <div id="oficio-modal" class="hidden fixed inset-0 z-[70] bg-black/25 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white border border-black/10 rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl">
+      <div class="p-3.5 sm:p-4 border-b border-black/[0.08] flex items-center justify-between bg-[#fbfbfd]">
+        <div class="text-xs font-semibold text-[#1d1d1f]">Vista Previa Institucional del Oficio</div>
+        <div class="flex items-center gap-2">
+          <button type="button" data-action="print-oficio" class="mac-btn-primary">
+            <span class="material-symbols-outlined text-[15px]">print</span> Imprimir / PDF
+          </button>
+          <button type="button" data-action="close-oficio-modal" class="mac-btn-secondary w-8 h-8 p-0">✕</button>
+        </div>
+      </div>
+      <div id="oficio-print-area" class="p-6 sm:p-8"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL DE ATAJOS DE TECLADO                                              -->
+  <!-- ======================================================================= -->
+  <div id="shortcuts-modal" class="hidden fixed inset-0 z-[70] bg-black/25 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white border border-black/10 rounded-2xl max-w-md w-full p-5 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-black/[0.06] pb-3">
+        <h3 class="text-sm font-semibold text-[#1d1d1f]">Atajos Rápidos de Oficina</h3>
+        <button type="button" data-action="close-shortcuts" class="mac-btn-secondary w-7 h-7 p-0">✕</button>
+      </div>
+      <div class="mac-group">
+        <div class="mac-group-row">
+          <span class="text-[#6e6e73]">Salto rápido al buscador global</span>
+          <span class="font-mono text-[11px] bg-[#f5f5f7] px-2 py-0.5 rounded border border-black/10">⌘K / Ctrl+K / /</span>
+        </div>
+        <div class="mac-group-row">
+          <span class="text-[#6e6e73]">Cerrar inspector o modal</span>
+          <span class="font-mono text-[11px] bg-[#f5f5f7] px-2 py-0.5 rounded border border-black/10">Esc</span>
+        </div>
+        <div class="mac-group-row">
+          <span class="text-[#6e6e73]">Inspeccionar expediente</span>
+          <span class="font-mono text-[11px] bg-[#f5f5f7] px-2 py-0.5 rounded border border-black/10">Clic en fila</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL DE AVISO POR CORREO INSTITUCIONAL (OUTLOOK)                       -->
+  <!-- ======================================================================= -->
+  <div id="outlook-modal" class="hidden fixed inset-0 z-[75] bg-black/30 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white border border-black/10 rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden">
+      <div class="p-4 border-b border-black/[0.08] flex items-center justify-between bg-[#fbfbfd]">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-[#0078d4]/12 text-[#0078d4] flex items-center justify-center">
+            <span class="material-symbols-outlined text-[19px]">mail</span>
+          </div>
           <div>
-            <h3 class="text-sm font-bold text-ink">Seguimiento de solicitudes de alumnos</h3>
-            <p class="text-[11px] text-steel mt-0.5">Revisa documentos cargados, valida prerequisitos y autoriza cartas de presentación.</p>
+            <h3 class="text-xs font-semibold text-[#1d1d1f]">Enviar Aviso por Correo Institucional (Outlook)</h3>
+            <p id="outlook-modal-sub" class="text-[11px] text-[#6e6e73]">Notificar al alumno que ya puede recoger sus oficios en ventanilla</p>
           </div>
-          <span class="text-xs font-mono font-semibold text-steel bg-paper border border-line px-3 py-1.5 rounded-lg">
-            2 pendientes
-          </span>
         </div>
-        <div class="divide-y divide-line">
-          <article class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 row-hover transition">
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-ink">Daniel Bautista</span>
-                <span class="font-mono text-[10px] text-steel">· Matrícula: 20201542</span>
-              </div>
-              <p class="text-[11px] text-steel">Solicitud de inicio · Documentos en revisión · Etapa 2 (Requisitos)</p>
-            </div>
-            <button class="rounded-lg bg-ink px-3.5 py-2 text-xs font-semibold text-white hover:bg-accent transition shrink-0" onclick="showToast('Solicitud de Daniel Bautista abierta para revisión')">
-              Revisar solicitud
-            </button>
-          </article>
-          <article class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 row-hover transition">
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-ink">Mariana López</span>
-                <span class="font-mono text-[10px] text-steel">· Matrícula: 20201876</span>
-              </div>
-              <p class="text-[11px] text-steel">Postulación PR-021 · Entrevista pendiente con Bosch · Etapa 4</p>
-            </div>
-            <button class="rounded-lg border border-line px-3.5 py-2 text-xs font-semibold text-ink hover:bg-slate-50 transition shrink-0" onclick="showToast('Entrevista de Mariana López marcada para seguimiento')">
-              Dar seguimiento
-            </button>
-          </article>
-        </div>
-      </section>
-    </section>
-
-    <!-- PANEL 2: EMPRESAS Y OFERTAS -->
-    <section id="panel-adm-empresas" role="tabpanel" aria-labelledby="tab-adm-empresas" data-admin-panel="empresas" hidden>
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
-        
-        <!-- Empresas con Convenio -->
-        <section class="bg-white border border-line rounded-xl overflow-hidden">
-          <div class="p-5 sm:p-6 border-b border-line flex items-center justify-between gap-3">
-            <div>
-              <h3 class="text-sm font-bold text-ink">Empresas con convenio</h3>
-              <p class="text-[11px] text-steel mt-0.5">Alta, renovación y vigencia de instituciones receptoras</p>
-            </div>
-            <button class="inline-flex items-center gap-1 rounded-lg bg-accent px-3 py-2 text-xs font-semibold text-white hover:bg-ink transition" onclick="showToast('Formulario de nueva empresa disponible')">
-              <span class="material-symbols-outlined text-sm">add</span> Nueva empresa
-            </button>
-          </div>
-          <div class="divide-y divide-line">
-            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
-              <div>
-                <h4 class="text-xs font-bold text-ink">Nemak México</h4>
-                <p class="text-[11px] text-steel mt-0.5">Monterrey · Producción · Vence 30/06/2027</p>
-              </div>
-              <button class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1" onclick="showToast('Convenio de Nemak en orden')">
-                Activo
-              </button>
-            </article>
-            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
-              <div>
-                <h4 class="text-xs font-bold text-ink">Bosch México</h4>
-                <p class="text-[11px] text-steel mt-0.5">Ciudad Juárez · Calidad · Vence 18/02/2027</p>
-              </div>
-              <button class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1" onclick="showToast('Convenio de Bosch en orden')">
-                Activo
-              </button>
-            </article>
-            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
-              <div>
-                <h4 class="text-xs font-bold text-ink">CEMEX Operaciones</h4>
-                <p class="text-[11px] text-steel mt-0.5">Monterrey · Logística · Renovación pendiente</p>
-              </div>
-              <button class="text-[10px] font-semibold text-amber-700 bg-amber-50 rounded px-2.5 py-1" onclick="showToast('Renovación de CEMEX turnada a jurídico')">
-                Por renovar
-              </button>
-            </article>
-          </div>
-        </section>
-
-        <!-- Ofertas de Residencia -->
-        <section class="bg-white border border-line rounded-xl overflow-hidden">
-          <div class="p-5 sm:p-6 border-b border-line flex items-center justify-between gap-3">
-            <div>
-              <h3 class="text-sm font-bold text-ink">Ofertas de residencia</h3>
-              <p class="text-[11px] text-steel mt-0.5">Publica, pausa o retira proyectos del banco</p>
-            </div>
-            <button class="inline-flex items-center gap-1 rounded-lg border border-line px-3 py-2 text-xs font-semibold text-ink hover:bg-slate-50 transition" onclick="showToast('Formulario de nueva oferta disponible')">
-              <span class="material-symbols-outlined text-sm">post_add</span> Nueva oferta
-            </button>
-          </div>
-          <div class="divide-y divide-line">
-            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="font-mono text-[10px] font-semibold text-steel">PR-018</span>
-                  <h4 class="text-xs font-bold text-ink">Reducción de tiempos de cambio</h4>
-                </div>
-                <p class="text-[11px] text-steel mt-0.5">Nemak México · 3 postulaciones de alumnos</p>
-              </div>
-              <button class="offer-status text-[10px] font-bold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1.5 transition" aria-pressed="true" onclick="toggleOffer(this)">
-                Publicada
-              </button>
-            </article>
-            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="font-mono text-[10px] font-semibold text-steel">PR-021</span>
-                  <h4 class="text-xs font-bold text-ink">Indicadores de calidad</h4>
-                </div>
-                <p class="text-[11px] text-steel mt-0.5">Bosch México · 2 postulaciones de alumnos</p>
-              </div>
-              <button class="offer-status text-[10px] font-bold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1.5 transition" aria-pressed="true" onclick="toggleOffer(this)">
-                Publicada
-              </button>
-            </article>
-            <article class="p-4 sm:p-5 flex items-center justify-between gap-3 row-hover transition">
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="font-mono text-[10px] font-semibold text-steel">PR-024</span>
-                  <h4 class="text-xs font-bold text-ink">Optimización de rutas</h4>
-                </div>
-                <p class="text-[11px] text-steel mt-0.5">CEMEX Operaciones · Sin postulaciones</p>
-              </div>
-              <button class="offer-status text-[10px] font-bold text-steel bg-slate-100 rounded px-2.5 py-1.5 transition" aria-pressed="false" onclick="toggleOffer(this)">
-                Retirada
-              </button>
-            </article>
-          </div>
-        </section>
-
+        <button type="button" data-action="close-outlook-modal" class="mac-btn-secondary w-8 h-8 p-0">✕</button>
       </div>
-    </section>
 
-    <!-- PANEL 3: SOLICITUDES -->
-    <section id="panel-adm-solicitudes" role="tabpanel" aria-labelledby="tab-adm-solicitudes" data-admin-panel="solicitudes" hidden>
-      <section class="bg-white border border-line rounded-xl overflow-hidden">
-        <div class="p-5 sm:p-6 border-b border-line">
-          <h3 class="text-sm font-bold text-ink">Seguimiento de solicitudes de alumnos</h3>
-          <p class="text-[11px] text-steel mt-0.5">Revisa documentos, asigna empresa y autoriza el avance del proceso.</p>
+      <div class="p-5 space-y-3.5 text-xs">
+        <input type="hidden" id="outlook-exp-id" value="">
+        <div id="outlook-smtp-badge" class="px-3 py-2 rounded-lg text-[11px] flex items-center justify-between gap-2 bg-[#0078d4]/[0.08] text-[#005a9e]">
+          <span>Listo para redactar en Outlook Web o enviar vía SMTP institucional.</span>
         </div>
-        <div class="divide-y divide-line">
-          <article class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 row-hover transition">
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-ink">Daniel Bautista</span>
-                <span class="font-mono text-[10px] text-steel">· Matrícula: 20201542</span>
-              </div>
-              <p class="text-[11px] text-steel">Solicitud de inicio · Documentos incompletos · Etapa 2 de 10</p>
-            </div>
-            <button class="rounded-lg bg-accent px-3.5 py-2 text-xs font-semibold text-white hover:bg-ink transition shrink-0" onclick="showToast('Solicitud de Daniel Bautista abierta para revisión')">
-              Revisar solicitud
-            </button>
-          </article>
-          <article class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 row-hover transition">
-            <div class="space-y-1">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-ink">Mariana López</span>
-                <span class="font-mono text-[10px] text-steel">· Matrícula: 20201876</span>
-              </div>
-              <p class="text-[11px] text-steel">Postulación PR-021 · Entrevista pendiente con Bosch · Etapa 4 de 10</p>
-            </div>
-            <button class="rounded-lg border border-line px-3.5 py-2 text-xs font-semibold text-ink hover:bg-slate-50 transition shrink-0" onclick="showToast('Entrevista de Mariana López marcada para seguimiento')">
-              Dar seguimiento
-            </button>
-          </article>
+
+        <div>
+          <label for="outlook-to" class="block font-semibold text-[#1d1d1f] mb-1">Correo Institucional del Estudiante *</label>
+          <input type="email" id="outlook-to" placeholder="l22071201@cdmadero.tecnm.mx" class="mac-input w-full px-3 py-1.5 lowercase">
         </div>
-      </section>
-    </section>
 
-    <!-- PANEL 4: CASOS ESPECIALES -->
-    <section id="panel-adm-casos" role="tabpanel" aria-labelledby="tab-adm-casos" data-admin-panel="casos" hidden>
-      <section class="bg-white border border-line rounded-xl overflow-hidden">
-        <div class="p-5 sm:p-6 border-b border-line">
-          <h3 class="text-sm font-bold text-ink">Atención de casos especiales</h3>
-          <p class="text-[11px] text-steel mt-0.5">Resuelve solicitudes fuera de calendario, cambios de proyecto o bajas temporales.</p>
+        <div>
+          <label for="outlook-subject" class="block font-semibold text-[#1d1d1f] mb-1">Asunto *</label>
+          <input type="text" id="outlook-subject" class="mac-input w-full px-3 py-1.5">
         </div>
-        <div class="p-5 sm:p-6">
-          <div class="rounded-xl border border-amber-200/80 bg-amber-50/40 p-5">
-            <div class="flex items-center justify-between gap-3">
-              <span class="text-xs font-mono font-bold text-steel">CASO #0241</span>
-              <span class="case-status text-xs font-bold text-amber-700 bg-amber-100/60 px-2.5 py-0.5 rounded">En revisión</span>
-            </div>
-            <h4 class="text-sm font-bold text-ink mt-3">Cambio de fecha de inicio con empresa receptora</h4>
-            <p class="text-xs text-steel mt-1">Alumno: Daniel Bautista (20201542) · Abierto hace 2 días</p>
-            <div class="flex flex-wrap gap-2.5 mt-5">
-              <button class="rounded-lg bg-accent px-4 py-2 text-xs font-semibold text-white hover:bg-ink transition" onclick="resolveCase(this)">
-                Atender caso
-              </button>
-              <button class="rounded-lg border border-line bg-white px-4 py-2 text-xs font-semibold text-ink hover:bg-slate-50 transition" onclick="showToast('Caso turnado al comité académico')">
-                Asignar al comité
-              </button>
-            </div>
-          </div>
+
+        <div>
+          <label for="outlook-body" class="block font-semibold text-[#1d1d1f] mb-1">Mensaje de Aviso *</label>
+          <textarea id="outlook-body" rows="6" class="mac-textarea w-full px-3 py-2 leading-relaxed"></textarea>
         </div>
-      </section>
-    </section>
-
-  </main>
-
-  <!-- Toast Notification -->
-  <div aria-live="polite" class="fixed bottom-5 right-5 hidden max-w-xs rounded-xl bg-ink px-4 py-3 text-xs font-semibold text-white shadow-xl z-50 border border-white/10" id="toast"></div>
-
-  <!-- Footer Institucional -->
-  <footer class="w-full border-t border-line bg-white py-6 px-4 sm:px-8 mt-12 text-xs text-steel">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <span class="font-bold text-ink">TecNM</span>
-        <span>© 2026 Tecnológico Nacional de México · Ingeniería Industrial</span>
       </div>
-      <div class="flex items-center gap-6 text-[11px] font-mono">
-        <span>Módulo de Vinculación</span>
-        <span>v2.4</span>
+
+      <div class="p-4 border-t border-black/[0.08] bg-[#fbfbfd] flex flex-wrap items-center justify-between gap-2">
+        <button type="button" data-action="close-outlook-modal" class="mac-btn-secondary">
+          Cancelar
+        </button>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" data-action="send-outlook-web" class="mac-btn-primary" style="background: #0078d4;">
+            <span class="material-symbols-outlined text-[15px]">open_in_new</span>
+            <span>Abrir en Outlook Web y Registrar</span>
+          </button>
+          <button type="button" data-action="send-outlook-smtp" class="mac-btn-secondary">
+            <span class="material-symbols-outlined text-[15px] text-[#0078d4]">send</span>
+            <span>Enviar Directo (SMTP)</span>
+          </button>
+        </div>
       </div>
     </div>
-  </footer>
+  </div>
 
-  <script src="../assets/js/app.js?v=3" defer></script>
-  <script>
-    function activateAdminTab(name) {
-      document.querySelectorAll('[data-admin-tab]').forEach((tab) => {
-        const active = tab.dataset.adminTab === name;
-        tab.classList.toggle('is-active', active);
-        tab.setAttribute('aria-selected', active);
-      });
-      document.querySelectorAll('[data-admin-panel]').forEach((panel) => {
-        panel.hidden = panel.dataset.adminPanel !== name;
-      });
-    }
+  <!-- Toast HUD flotante macOS -->
+  <div id="toast-container" aria-live="polite" class="hidden"></div>
 
-    function toggleOffer(button) {
-      const published = button.getAttribute('aria-pressed') === 'true';
-      button.setAttribute('aria-pressed', String(!published));
-      button.textContent = published ? 'Retirada' : 'Publicada';
-      button.className = published 
-        ? 'offer-status text-[10px] font-bold text-steel bg-slate-100 rounded px-2.5 py-1.5 transition' 
-        : 'offer-status text-[10px] font-bold text-emerald-700 bg-emerald-50 rounded px-2.5 py-1.5 transition';
-      
-      const count = document.querySelectorAll('.offer-status[aria-pressed="true"]').length;
-      const countEl = document.getElementById('offer-count');
-      if (countEl) countEl.textContent = count;
-      const heroCount = document.getElementById('hero-offer-count');
-      if (heroCount) heroCount.textContent = count;
-      showToast(published ? 'Oferta retirada del banco público' : 'Oferta publicada para estudiantes');
-    }
-
-    function resolveCase(button) {
-      button.textContent = 'Caso en atención';
-      button.disabled = true;
-      button.className = 'rounded-lg bg-slate-100 px-4 py-2 text-xs font-semibold text-steel cursor-not-allowed';
-      const statusEl = document.querySelector('.case-status');
-      if (statusEl) {
-        statusEl.textContent = 'En atención';
-        statusEl.className = 'case-status text-xs font-bold text-accent bg-blue-50 px-2.5 py-0.5 rounded';
-      }
-      const caseCountEl = document.getElementById('case-count');
-      if (caseCountEl) caseCountEl.textContent = '0';
-      showToast('Caso asignado para atención de Gestión y Vinculación');
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.remove('hidden');
-      window.setTimeout(() => toast.classList.add('hidden'), 2800);
-    }
-  </script>
+  <!-- Carga ordenada de scripts -->
+  <script src="../assets/js/db-residencias.js?v=9"></script>
+  <script src="../assets/js/store.js?v=9"></script>
+  <script src="../assets/js/ui-components.js?v=9"></script>
+  <script src="../assets/js/app.js?v=9"></script>
 </body>
 </html>

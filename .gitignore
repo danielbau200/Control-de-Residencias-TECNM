@@ -1,3 +1,22 @@
 .DS_Store
 Thumbs.db
 *.log
+
+# Credenciales y variables de entorno locales (NUNCA subir .env real)
+.env
+.env.*
+!.env.example
+
+# Python / cachés
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# Respaldos de draw.io y temporales de oficina
+*.bkp
+.$*
+*.xlsx
+REUNION 1 REQUERIMIENTOS.txt
+generar_sql_residencias.py

@@ -1,0 +1,234 @@
+<mxfile host="Electron" agent="Antigravity-Drawio-Generator" version="24.7.17">
+  <diagram id="residencias-seguridad-secuencia-3" name="Arquitectura de Seguridad y Secuencia">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1820" pageHeight="1480" math="0" shadow="0" background="light-dark(#ffffff, #121212)">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="seq_title" value="Arquitectura de Seguridad y Secuencia — Control de Residencias (2 Usuarios + Correo Outlook)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#263238;strokeColor=#263238;fontSize=15;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="25" width="1680" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="p_top_u" value="Usuario Activo
+        (Usuario 1 Gestión o
+        Usuario 2 Academia)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="60" y="95" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bot_u" value="Usuario Activo
+        (Usuario 1 Gestión o
+        Usuario 2 Academia)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1235" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life_u" value="" style="endArrow=none;dashed=1;dashPattern=6 4;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1" source="p_top_u" target="p_bot_u">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p_top_ui" value="Interfaz Web
+        (macOS UI · JS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="340" y="95" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bot_ui" value="Interfaz Web
+        (macOS UI · JS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1235" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life_ui" value="" style="endArrow=none;dashed=1;dashPattern=6 4;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1" source="p_top_ui" target="p_bot_ui">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p_top_api" value="Servidor Backend
+        (Flask · Python)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="620" y="95" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bot_api" value="Servidor Backend
+        (Flask · Python)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#E65100;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="620" y="1235" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life_api" value="" style="endArrow=none;dashed=1;dashPattern=6 4;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1" source="p_top_api" target="p_bot_api">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p_top_libpq" value="Cliente C Nativo
+        (libpq · PQexecParams)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#5E35B1;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="900" y="95" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bot_libpq" value="Cliente C Nativo
+        (libpq · PQexecParams)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#5E35B1;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="900" y="1235" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life_libpq" value="" style="endArrow=none;dashed=1;dashPattern=6 4;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1" source="p_top_libpq" target="p_bot_libpq">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p_top_pg" value="PostgreSQL 16
+        (app_residencias_user + SPs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="95" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bot_pg" value="PostgreSQL 16
+        (app_residencias_user + SPs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="1235" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life_pg" value="" style="endArrow=none;dashed=1;dashPattern=6 4;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1" source="p_top_pg" target="p_bot_pg">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="p_top_outlook" value="Microsoft Outlook
+        (SMTP Office 365 / Web)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="95" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bot_outlook" value="Microsoft Outlook
+        (SMTP Office 365 / Web)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;strokeWidth=2;fontStyle=1;fontSize=11;fontColor=#212121;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="1235" width="195" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="life_outlook" value="" style="endArrow=none;dashed=1;dashPattern=6 4;strokeColor=#78909C;strokeWidth=1.5;" edge="1" parent="1" source="p_top_outlook" target="p_bot_outlook">
+          <mxGeometry relative="1" as="geometry"></mxGeometry>
+        </mxCell>
+        <mxCell id="act_u" value="" style="rounded=0;fillColor=#FFFFFF;strokeColor=#455A64;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="150" y="185" width="14" height="1005" as="geometry" />
+        </mxCell>
+        <mxCell id="act_ui" value="" style="rounded=0;fillColor=#FFFFFF;strokeColor=#455A64;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="430" y="200" width="14" height="975" as="geometry" />
+        </mxCell>
+        <mxCell id="act_api" value="" style="rounded=0;fillColor=#FFFFFF;strokeColor=#455A64;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="710" y="245" width="14" height="885" as="geometry" />
+        </mxCell>
+        <mxCell id="act_libpq" value="" style="rounded=0;fillColor=#FFFFFF;strokeColor=#455A64;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="990" y="290" width="14" height="710" as="geometry" />
+        </mxCell>
+        <mxCell id="act_pg" value="" style="rounded=0;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="335" width="14" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="act_out" value="" style="rounded=0;fillColor=#E1F5FE;strokeColor=#0277BD;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1560" y="1020" width="14" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="m1" value="1. Ejecuta operación (ej. Emitir P.A/P.B, Asignar Asesor o Avisar por Outlook)" style="endArrow=block;endFill=1;html=1;strokeWidth=1.6;strokeColor=#263238;fontSize=11;fontColor=#212121;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="164" y="205" as="sourcePoint" />
+          <mxPoint x="430" y="205" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m2" value="2. POST /api/... + Header X-System-Role (GESTION_1 o ACADEMIA) + JSON" style="endArrow=block;endFill=1;html=1;strokeWidth=1.6;strokeColor=#263238;fontSize=11;fontColor=#212121;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="444" y="250" as="sourcePoint" />
+          <mxPoint x="710" y="250" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m3" value="3. Valida payload y prepara llamada parametrizada" style="endArrow=block;endFill=1;html=1;strokeWidth=1.6;strokeColor=#263238;fontSize=11;fontColor=#212121;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="724" y="295" as="sourcePoint" />
+          <mxPoint x="990" y="295" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m4" value="4. CALL sp_...($1..$n) vía PQexecParams (sin concatenar SQL)" style="endArrow=block;endFill=1;html=1;strokeWidth=1.6;strokeColor=#263238;fontSize=11;fontColor=#212121;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="1004" y="340" as="sourcePoint" />
+          <mxPoint x="1270" y="340" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m5" value="5. fn_validar_rol_activo(rol)" style="endArrow=block;endFill=1;html=1;strokeWidth=1.5;strokeColor=#1565C0;fontSize=10;fontStyle=1;fontColor=#0D47A1;labelBackgroundColor=#FFFFFF;align=center;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="1270" y="360" as="sourcePoint" />
+          <mxPoint x="1270" y="405" as="targetPoint" />
+          <Array as="points">
+            <mxPoint x="1218" y="360" />
+            <mxPoint x="1218" y="405" />
+          </Array>
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="alt_frame" value="" style="rounded=0;fillColor=none;strokeColor=#455A64;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="425" width="1360" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_tab" value="alt" style="rounded=0;fillColor=#455A64;strokeColor=#455A64;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="50" y="425" width="64" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="alt_cond1" value="[Rol NO autorizado para la operación]" style="rounded=1;fillColor=#FFEBEE;strokeColor=#EF9A9A;fontSize=11;fontStyle=1;fontColor=#B71C1C;" vertex="1" parent="1">
+          <mxGeometry x="125" y="429" width="310" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m6a" value="6a. RAISE EXCEPTION (SQLSTATE 42501 · Permiso denegado)" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.6;strokeColor=#C62828;fontSize=11;fontStyle=1;fontColor=#C62828;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="1270" y="490" as="sourcePoint" />
+          <mxPoint x="1004" y="490" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m7a" value="7a. Retorna error controlado" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.6;strokeColor=#C62828;fontSize=11;fontStyle=1;fontColor=#C62828;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="990" y="535" as="sourcePoint" />
+          <mxPoint x="724" y="535" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m8a" value="8a. HTTP 403 Forbidden (JSON)" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.6;strokeColor=#C62828;fontSize=11;fontStyle=1;fontColor=#C62828;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="710" y="580" as="sourcePoint" />
+          <mxPoint x="444" y="580" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m9a" value="9a. Muestra alerta y bloquea el cambio" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.6;strokeColor=#C62828;fontSize=11;fontStyle=1;fontColor=#C62828;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="430" y="625" as="sourcePoint" />
+          <mxPoint x="164" y="625" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="alt_sep" value="" style="endArrow=none;dashed=1;dashPattern=8 5;strokeColor=#455A64;strokeWidth=1.6;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="50" y="665" as="sourcePoint" />
+          <mxPoint x="1410" y="665" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="alt_cond2" value="[Rol autorizado]" style="rounded=1;fillColor=#E8F5E9;strokeColor=#A5D6A7;fontSize=11;fontStyle=1;fontColor=#1B5E20;" vertex="1" parent="1">
+          <mxGeometry x="125" y="675" width="160" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m6b" value="6b. SECURITY DEFINER +&lt;br&gt;pg_advisory_xact_lock (folio único)" style="endArrow=block;endFill=1;html=1;strokeWidth=1.5;strokeColor=#1565C0;fontSize=10;fontStyle=1;fontColor=#0D47A1;labelBackgroundColor=#FFFFFF;align=center;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="1270" y="710" as="sourcePoint" />
+          <mxPoint x="1270" y="758" as="targetPoint" />
+          <Array as="points">
+            <mxPoint x="1218" y="710" />
+            <mxPoint x="1218" y="758" />
+          </Array>
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m7b" value="7b. Trigger AFTER inserta rastro&lt;br&gt;en bitacora_movimientos" style="endArrow=block;endFill=1;html=1;strokeWidth=1.5;strokeColor=#1565C0;fontSize=10;fontStyle=1;fontColor=#0D47A1;labelBackgroundColor=#FFFFFF;align=center;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="1270" y="778" as="sourcePoint" />
+          <mxPoint x="1270" y="826" as="targetPoint" />
+          <Array as="points">
+            <mxPoint x="1218" y="778" />
+            <mxPoint x="1218" y="826" />
+          </Array>
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m8b" value="8b. Retorna resultado OUT + estado actualizado" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.6;strokeColor=#2E7D32;fontSize=11;fontStyle=1;fontColor=#1B5E20;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="1270" y="865" as="sourcePoint" />
+          <mxPoint x="1004" y="865" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m9b" value="9b. Convierte fila a diccionario Python" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.5;strokeColor=#37474F;fontSize=11;fontColor=#37474F;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="990" y="910" as="sourcePoint" />
+          <mxPoint x="724" y="910" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m10_mail" value="10. Envío SMTP Office 365 (o enlace Outlook Web prellenado)" style="endArrow=block;endFill=1;html=1;strokeWidth=1.6;strokeColor=#0277BD;fontSize=11;fontStyle=1;fontColor=#01579B;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="724" y="1035" as="sourcePoint" />
+          <mxPoint x="1560" y="1035" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m11_mail" value="11. Confirmación de despacho al correo institucional del alumno" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.5;strokeColor=#37474F;fontSize=11;fontColor=#37474F;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="1560" y="1085" as="sourcePoint" />
+          <mxPoint x="724" y="1085" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m12" value="12. HTTP 200 OK (JSON con expediente y bitácora actualizados)" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.6;strokeColor=#2E7D32;fontSize=11;fontStyle=1;fontColor=#1B5E20;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="710" y="1135" as="sourcePoint" />
+          <mxPoint x="444" y="1135" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="m13" value="13. Actualiza vista, KPIs y bitácora en vivo" style="endArrow=open;endFill=0;dashed=1;dashPattern=6 4;html=1;strokeWidth=1.6;strokeColor=#2E7D32;fontSize=11;fontStyle=1;fontColor=#1B5E20;labelBackgroundColor=#FFFFFF;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+          <mxPoint x="430" y="1175" as="sourcePoint" />
+          <mxPoint x="164" y="1175" as="targetPoint" />
+        </mxGeometry>
+        </mxCell>
+        <mxCell id="sec_notes" value="&lt;b&gt;3 Capas de Defensa + Integración Outlook:&lt;/b&gt; &amp;nbsp; &lt;b&gt;(1) Mínimo Privilegio:&lt;/b&gt; app_residencias_user solo ejecuta SPs autorizados. &amp;nbsp; | &amp;nbsp; &lt;b&gt;(2) Solo 2 Roles Activos:&lt;/b&gt; GESTION_1 y ACADEMIA validados en PostgreSQL. &amp;nbsp; | &amp;nbsp; &lt;b&gt;(3) Aviso Institucional:&lt;/b&gt; Correo Outlook al alumno registrado en bitacora_movimientos." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#90CAF9;strokeWidth=1.5;fontSize=11;fontColor=#0D47A1;align=left;spacingLeft=16;spacingRight=16;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1330" width="1680" height="62" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

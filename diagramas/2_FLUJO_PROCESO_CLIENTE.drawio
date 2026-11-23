@@ -1,0 +1,141 @@
+<mxfile host="Electron" agent="Antigravity-Drawio-Generator">
+  <diagram id="residencias-flujo-cliente-2" name="Flujo Completo del Proceso (Para el Cliente)">
+    <mxGraphModel dx="1077" dy="565" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1750" pageHeight="1650" background="light-dark(#ffffff, #121212)" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pool" parent="1" style="swimlane;startSize=42;fillColor=#263238;swimlaneFillColor=#FFFFFF;strokeColor=#263238;strokeWidth=2;fontSize=16;fontStyle=1;fontColor=#FFFFFF;rounded=0;" value="Flujo Completo del Proceso de Residencias Profesionales — Validación con Oficina de Ing. Industrial" vertex="1">
+          <mxGeometry height="1270" width="1560" x="40" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_alu" parent="pool" style="swimlane;startSize=34;fillColor=#ECEFF1;swimlaneFillColor=#FAFBFC;strokeColor=#90A4AE;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#37474F;rounded=0;" value="1. Estudiante (ventanilla y correo Outlook)" vertex="1">
+          <mxGeometry height="1228" width="360" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" parent="lane_alu" style="ellipse;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#0D47A1;" value="&lt;b&gt;INICIO&lt;/b&gt;&lt;br&gt;El estudiante entrega sus hojas impresas&lt;br&gt;de anteproyecto en la oficina" vertex="1">
+          <mxGeometry height="82" width="280" x="40" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="p_recibe_mail" parent="lane_alu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#546E7A;strokeWidth=1.5;fontSize=11;fontColor=#212121;" value="Recibe aviso en su&lt;br&gt;&lt;b&gt;correo institucional (Outlook)&lt;/b&gt;&lt;br&gt;para pasar por sus oficios" vertex="1">
+          <mxGeometry height="78" width="280" x="40" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="p_fin" parent="lane_alu" style="ellipse;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;strokeWidth=2.5;fontSize=11;fontStyle=1;fontColor=#1B5E20;" value="&lt;b&gt;FIN DEL TRÁMITE INICIAL&lt;/b&gt;&lt;br&gt;El estudiante recoge sus oficios impresos&lt;br&gt;e inicia su Residencia Profesional" vertex="1">
+          <mxGeometry height="82" width="280" x="40" y="995" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_u1" parent="pool" style="swimlane;startSize=34;fillColor=#E8F5E9;swimlaneFillColor=#FFFFFF;strokeColor=#81C784;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#1B5E20;rounded=0;" value="2. Usuario 1 · Gestión (Recepción, Oficios y Avisos)" vertex="1">
+          <mxGeometry height="1228" width="840" x="360" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" parent="lane_u1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=11;fontColor=#212121;" value="&lt;b&gt;Captura en formulario único:&lt;/b&gt;&lt;br&gt;Registra alumno, &lt;b&gt;correo institucional&lt;/b&gt;, empresa&lt;br&gt;y proyecto (sin llenar hojas de Excel)" vertex="1">
+          <mxGeometry height="82" width="290" x="45" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" parent="lane_u1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#F9A825;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#212121;" value="¿Tiene Servicio Social&lt;br&gt;liberado o falta comprobar?" vertex="1">
+          <mxGeometry height="96" width="250" x="65" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="p_ss_no" parent="lane_u1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#C62828;strokeWidth=2;fontSize=11;fontColor=#B71C1C;" value="&lt;b&gt;Trámite detenido por Servicio Social:&lt;/b&gt;&lt;br&gt;Aunque la oficina no puede verlo en el sistema escolar,&lt;br&gt;aquí queda apartado hasta que entregue su liberación" vertex="1">
+          <mxGeometry height="78" width="345" x="430" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="p_ss_pend" parent="lane_u1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#EF6C00;strokeWidth=1.5;fontSize=11;fontColor=#212121;" value="&lt;b&gt;Aviso de seguimiento:&lt;/b&gt;&lt;br&gt;Queda marcado como pendiente por confirmar&lt;br&gt;para solicitarle su constancia de Servicio Social" vertex="1">
+          <mxGeometry height="74" width="345" x="430" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" parent="lane_u1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFDE7;strokeColor=#F9A825;strokeWidth=2;fontSize=11;fontStyle=1;fontColor=#212121;" value="¿El alumno continúa&lt;br&gt;o dejó el trámite pausado?" vertex="1">
+          <mxGeometry height="94" width="250" x="65" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="p_pausa" parent="lane_u1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#607D8B;strokeWidth=1.5;dashed=1;fontSize=11;fontColor=#37474F;" value="&lt;b&gt;Excepción — Trámite Pausado:&lt;/b&gt;&lt;br&gt;Se aparta de los activos sin emitir oficio&lt;br&gt;(se puede reactivar si el estudiante regresa)" vertex="1">
+          <mxGeometry height="76" width="345" x="430" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="p5" parent="lane_u1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=11;fontColor=#212121;" value="&lt;b&gt;Acepta proyecto y emite Oficio P.A:&lt;/b&gt;&lt;br&gt;El sistema asigna automáticamente el número&lt;br&gt;consecutivo de autorización (sin repetir folios)" vertex="1">
+          <mxGeometry height="84" width="295" x="45" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="p8" parent="lane_u1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=11;fontColor=#212121;" value="&lt;b&gt;Emite Oficio de Asesor (P.B) e imprime:&lt;/b&gt;&lt;br&gt;Ve al asesor asignado, genera el folio P.B&lt;br&gt;e imprime los oficios para firma" vertex="1">
+          <mxGeometry height="84" width="295" x="45" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="p9" parent="lane_u1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;strokeWidth=1.5;fontSize=11;fontColor=#01579B;" value="&lt;b&gt;Envía aviso por Outlook institucional:&lt;/b&gt;&lt;br&gt;Con un clic envía o abre el correo institucional&lt;br&gt;del alumno avisando que ya puede recoger sus oficios" vertex="1">
+          <mxGeometry height="82" width="320" x="45" y="835" as="geometry" />
+        </mxCell>
+        <mxCell id="p10" parent="lane_u1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#2E7D32;strokeWidth=1.5;fontSize=11;fontColor=#212121;" value="&lt;b&gt;Expediente completo y consultas en segundos:&lt;/b&gt;&lt;br&gt;Cualquiera de los 2 encargados busca cualquier dato&lt;br&gt;o descarga listados a Excel cuando necesite reportes" vertex="1">
+          <mxGeometry height="82" width="355" x="430" y="995" as="geometry" />
+        </mxCell>
+        <mxCell id="lane_u2" parent="pool" style="swimlane;startSize=34;fillColor=#EDE7F6;swimlaneFillColor=#FDFCFE;strokeColor=#B39DDB;strokeWidth=1.5;fontSize=13;fontStyle=1;fontColor=#4A148C;rounded=0;" value="3. Usuario 2 · Academia (Asignación de Asesores)" vertex="1">
+          <mxGeometry height="1228" width="360" x="1200" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="p6" parent="lane_u2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#5E35B1;strokeWidth=1.5;fontSize=11;fontColor=#212121;" value="&lt;b&gt;Revisión de carga docente:&lt;/b&gt;&lt;br&gt;Consulta cuántos residentes atiende cada uno&lt;br&gt;de los&amp;nbsp; docentes del departamento" vertex="1">
+          <mxGeometry height="84" width="280" x="40" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="p7" parent="lane_u2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#5E35B1;strokeWidth=1.5;fontSize=11;fontColor=#212121;" value="&lt;b&gt;Asigna Asesor Interno:&lt;/b&gt;&lt;br&gt;Selecciona al profesor asesor y el sistema&lt;br&gt;genera la clave de control de Academia" vertex="1">
+          <mxGeometry height="84" width="280" x="40" y="695" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="pool" source="p1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#37474F;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#263238;labelBackgroundColor=#FFFFFF;" target="p2" value="Hojas físicas">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="pool" source="p2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#37474F;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#263238;labelBackgroundColor=#FFFFFF;" target="d1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3a" edge="1" parent="pool" source="d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#C62828;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#C62828;labelBackgroundColor=#FFFFFF;" target="p_ss_no" value="No lo ha liberado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3b" edge="1" parent="pool" source="d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#EF6C00;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#EF6C00;labelBackgroundColor=#FFFFFF;" target="p_ss_pend" value="Falta comprobar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3c" edge="1" parent="pool" source="p_ss_pend" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#EF6C00;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#EF6C00;labelBackgroundColor=#FFFFFF;" target="d2" value="Comprueba">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="962" y="392" />
+              <mxPoint x="550" y="392" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="pool" source="d1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#2E7D32;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#2E7D32;labelBackgroundColor=#FFFFFF;" target="d2" value="Sí, liberado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5a" edge="1" parent="pool" source="d2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#37474F;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#263238;labelBackgroundColor=#FFFFFF;" target="p_pausa" value="Lo dejó pausado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5b" edge="1" parent="pool" source="d2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#2E7D32;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#2E7D32;labelBackgroundColor=#FFFFFF;" target="p5" value="Continúa normal">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="pool" source="p5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#37474F;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#263238;labelBackgroundColor=#FFFFFF;" target="p6" value="Pasa a Asesores">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="pool" source="p6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#37474F;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#263238;labelBackgroundColor=#FFFFFF;" target="p7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="pool" source="p7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#37474F;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#263238;labelBackgroundColor=#FFFFFF;" target="p8" value="Regresa con asesor">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1380" y="815" />
+              <mxPoint x="710" y="815" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="pool" source="p8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#37474F;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#263238;labelBackgroundColor=#FFFFFF;" target="p9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="pool" source="p9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#0277BD;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#0277BD;labelBackgroundColor=#FFFFFF;" target="p_recibe_mail" value="Correo Outlook">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="pool" source="p_recibe_mail" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#2E7D32;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#2E7D32;labelBackgroundColor=#FFFFFF;" target="p_fin" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="pool" source="p9" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.8;strokeColor=#37474F;endArrow=block;endFill=1;fontSize=10;fontStyle=1;fontColor=#263238;labelBackgroundColor=#FFFFFF;" target="p10" value="Archiva aviso">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="565" y="1078" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="resumen" parent="1" style="swimlane;startSize=32;fillColor=#F5F5F5;swimlaneFillColor=#FFFFFF;strokeColor=#90A4AE;fontSize=13;fontStyle=1;fontColor=#263238;rounded=0;" value="¿Qué resuelve este sistema frente al control actual en hojas de Excel?" vertex="1">
+          <mxGeometry height="165" width="1560" x="40" y="1325" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" parent="resumen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#81C784;strokeWidth=1.5;fontSize=11;fontColor=#212121;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;" value="&lt;b&gt;1. Registro único desde ventanilla&lt;/b&gt;&lt;br&gt;&lt;br&gt;En cuanto llegan las hojas impresas se capturan en un solo formulario limpio, evitando llenar y buscar en varios archivos de Excel." vertex="1">
+          <mxGeometry height="98" width="355" x="25" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" parent="resumen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEBEE;strokeColor=#E57373;strokeWidth=1.5;fontSize=11;fontColor=#212121;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;" value="&lt;b&gt;2. Control de pausados y Servicio Social&lt;/b&gt;&lt;br&gt;&lt;br&gt;Permite apartar ordenadamente los proyectos que quedan pausados porque el alumno no había liberado su Servicio Social, sin perder su historial." vertex="1">
+          <mxGeometry height="98" width="355" x="405" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" parent="resumen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#B39DDB;strokeWidth=1.5;fontSize=11;fontColor=#212121;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;" value="&lt;b&gt;3. Reparto justo entre los docentes&lt;/b&gt;&lt;br&gt;&lt;br&gt;El encargado de asignar asesores ve al instante cuántos alumnos tiene cada profesor antes de elegirlo y generar su clave." vertex="1">
+          <mxGeometry height="98" width="355" x="785" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" parent="resumen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#4FC3F7;strokeWidth=1.5;fontSize=11;fontColor=#212121;align=left;verticalAlign=middle;spacingLeft=12;spacingRight=12;" value="&lt;b&gt;4. Avisos por Outlook y folios sin errores&lt;/b&gt;&lt;br&gt;&lt;br&gt;Genera folios P.A y P.B sin repetir, y avisa por correo institucional (Outlook) al estudiante en cuanto puede pasar por sus oficios." vertex="1">
+          <mxGeometry height="98" width="365" x="1165" y="48" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
